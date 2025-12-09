@@ -1,0 +1,2039 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.nova:support-service >----------------------
+[INFO] Building support-service 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.4.0:run (default-cli) > test-compile @ support-service >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ support-service ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 4 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ support-service ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ support-service ---
+[INFO] skip non existing resourceDirectory /Users/nikzan/JavaProjects/nova-support-project/backend/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ support-service ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 1 source file with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.4.0:run (default-cli) < test-compile @ support-service <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.4.0:run (default-cli) @ support-service ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.0)
+
+2025-12-10T02:13:48.722+05:00  INFO 12766 --- [support-service] [           main] c.n.support.SupportServiceApplication    : Starting SupportServiceApplication using Java 21.0.9 with PID 12766 (/Users/nikzan/JavaProjects/nova-support-project/backend/target/classes started by nikzan in /Users/nikzan/JavaProjects/nova-support-project/backend)
+2025-12-10T02:13:48.723+05:00  INFO 12766 --- [support-service] [           main] c.n.support.SupportServiceApplication    : No active profile set, falling back to 1 default profile: "default"
+2025-12-10T02:13:49.156+05:00  INFO 12766 --- [support-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-10T02:13:49.252+05:00  INFO 12766 --- [support-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 91 ms. Found 3 JPA repository interfaces.
+2025-12-10T02:13:49.551+05:00  INFO 12766 --- [support-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-10T02:13:49.562+05:00  INFO 12766 --- [support-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-10T02:13:49.562+05:00  INFO 12766 --- [support-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.33]
+2025-12-10T02:13:49.596+05:00  INFO 12766 --- [support-service] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-10T02:13:49.597+05:00  INFO 12766 --- [support-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 852 ms
+2025-12-10T02:13:49.731+05:00  INFO 12766 --- [support-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-10T02:13:49.846+05:00  INFO 12766 --- [support-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@50f4b83d
+2025-12-10T02:13:49.847+05:00  INFO 12766 --- [support-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-10T02:13:49.869+05:00  INFO 12766 --- [support-service] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:54320/support_service_db (PostgreSQL 15.15)
+2025-12-10T02:13:49.920+05:00  INFO 12766 --- [support-service] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 4 migrations (execution time 00:00.023s)
+2025-12-10T02:13:49.954+05:00  INFO 12766 --- [support-service] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 4
+2025-12-10T02:13:49.956+05:00  INFO 12766 --- [support-service] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2025-12-10T02:13:50.004+05:00  INFO 12766 --- [support-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-10T02:13:50.036+05:00  INFO 12766 --- [support-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.2.Final
+2025-12-10T02:13:50.054+05:00  INFO 12766 --- [support-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-10T02:13:50.181+05:00  INFO 12766 --- [support-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-10T02:13:50.212+05:00  WARN 12766 --- [support-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-10T02:13:50.219+05:00  INFO 12766 --- [support-service] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.15
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-10T02:13:50.745+05:00  INFO 12766 --- [support-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-10T02:13:50.787+05:00  INFO 12766 --- [support-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10T02:13:50.958+05:00  INFO 12766 --- [support-service] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-10T02:13:52.119+05:00  INFO 12766 --- [support-service] [           main] com.nova.support.service.MinioService    : MinIO bucket already exists: support-tickets
+2025-12-10T02:13:52.300+05:00  WARN 12766 --- [support-service] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-10T02:13:52.463+05:00  INFO 12766 --- [support-service] [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2025-12-10T02:13:52.464+05:00  INFO 12766 --- [support-service] [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@551ae26a]]
+2025-12-10T02:13:52.464+05:00  INFO 12766 --- [support-service] [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2025-12-10T02:13:52.514+05:00 ERROR 12766 --- [support-service] [           main] i.n.r.d.DnsServerAddressStreamProviders  : Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2025-12-10T02:13:52.523+05:00  INFO 12766 --- [support-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-12-10T02:13:52.529+05:00  INFO 12766 --- [support-service] [           main] c.n.support.SupportServiceApplication    : Started SupportServiceApplication in 4.016 seconds (process running for 4.215)
+2025-12-10T02:14:31.905+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-10T02:14:31.906+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-10T02:14:31.911+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2025-12-10T02:14:31.933+05:00 ERROR 12766 --- [support-service] [nio-8080-exec-1] c.n.s.controller.GlobalExceptionHandler  : Unhandled exception:
+
+org.springframework.web.servlet.resource.NoResourceFoundException: No static resource actuator/health.
+	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:585) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:52) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-12-10T02:14:36.963+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        count(t1_0.id) 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=?
+2025-12-10T02:14:37.061+05:00  WARN 12766 --- [support-service] [nio-8080-exec-2] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-12-10T02:14:50.232+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:14:52.475+05:00  INFO 12766 --- [support-service] [MessageBroker-2] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 1 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(1)-CONNECTED(1)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 6, active threads = 0, queued tasks = 0, completed tasks = 6], outboundChannel[pool size = 1, active threads = 0, queued tasks = 0, completed tasks = 1], sockJsScheduler[pool size = 5, active threads = 1, queued tasks = 2, completed tasks = 1]
+2025-12-10T02:15:38.945+05:00  INFO 12766 --- [support-service] [nio-8080-exec-8] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:16:12.224+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:16:30.857+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:19:43.603+05:00  INFO 12766 --- [support-service] [nio-8080-exec-3] c.n.s.controller.AdminTicketController   : Deleting ticket: 26
+Hibernate: 
+    select
+        count(*) 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:19:43.671+05:00  INFO 12766 --- [support-service] [nio-8080-exec-3] com.nova.support.service.TicketService   : Deleted ticket: 26
+Hibernate: 
+    delete 
+    from
+        tickets 
+    where
+        id=?
+2025-12-10T02:19:50.389+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:19:59.153+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] c.n.s.controller.AdminTicketController   : Deleting ticket: 22
+Hibernate: 
+    select
+        count(*) 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:19:59.162+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] com.nova.support.service.TicketService   : Deleted ticket: 22
+Hibernate: 
+    delete 
+    from
+        tickets 
+    where
+        id=?
+2025-12-10T02:20:03.348+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:20:11.283+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:21:35.244+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] c.n.support.controller.TicketController  : Creating ticket for project API key: demo-api-key-12345
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.api_key=?
+2025-12-10T02:21:35.287+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] com.nova.support.service.MinioService    : Uploaded byte array to MinIO: c14bfdfb-c94b-41cd-b59c-7556f1295597-audio.webm
+2025-12-10T02:21:35.288+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] c.nova.support.service.WhisperService    : Sending audio to Whisper service: filename=audio.webm, language=null
+2025-12-10T02:21:58.371+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] c.nova.support.service.WhisperService    : Transcription successful: language=ru, segments=null
+2025-12-10T02:21:58.372+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] com.nova.support.service.TicketService   : Audio transcribed: Алло, ебаный ты сука, долбоеб. Где мои блядские кроссовки? Я заебался их ждать. Что за полный пиздец происходит? Я вам отдал бабки, нету кроссовок. Я нас палит в полицию заяву на кота-уроды, если вы мне их не пришлете.
+2025-12-10T02:21:58.372+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:22:04.785+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:22:05.280+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        knowledge_base 
+    WHERE
+        project_id = ? 
+        AND embedding IS NOT NULL 
+    ORDER BY
+        embedding::vector(768) <=> CAST(? AS vector(768)) 
+    LIMIT
+        ?
+2025-12-10T02:22:05.994+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+Hibernate: 
+    insert 
+    into
+        tickets
+        (ai_summary, audio_url, closed_at, created_at, customer_email, customer_name, image_url, operator_id, operator_response, original_text, priority, project_id, sentiment, sentiment_score, status, suggested_answer, transcribed_text, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:22:07.571+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] com.nova.support.service.TicketService   : Sent WebSocket notification for ticket 34 to project 1
+2025-12-10T02:22:07.576+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] c.n.support.controller.TicketController  : Ticket created with ID: 34
+2025-12-10T02:23:34.191+05:00  INFO 12766 --- [support-service] [nio-8080-exec-3] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:24:51.550+05:00  INFO 12766 --- [support-service] [io-8080-exec-10] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:27:50.634+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:29:18.522+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] c.n.s.c.KnowledgeBaseController          : Creating knowledge base entry: Что делать если подошва в дерьме
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.id=?
+2025-12-10T02:29:18.550+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+Hibernate: 
+    insert 
+    into
+        knowledge_base
+        (content, created_at, embedding, project_id, source_type, source_url, title, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:29:19.037+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] c.n.s.service.KnowledgeBaseService       : Created knowledge base entry: Что делать если подошва в дерьме
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:29:35.716+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] c.n.support.controller.TicketController  : Creating ticket for project API key: demo-api-key-12345
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.api_key=?
+2025-12-10T02:29:35.730+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:29:40.304+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:29:40.643+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        knowledge_base 
+    WHERE
+        project_id = ? 
+        AND embedding IS NOT NULL 
+    ORDER BY
+        embedding::vector(768) <=> CAST(? AS vector(768)) 
+    LIMIT
+        ?
+2025-12-10T02:29:40.839+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+Hibernate: 
+    insert 
+    into
+        tickets
+        (ai_summary, audio_url, closed_at, created_at, customer_email, customer_name, image_url, operator_id, operator_response, original_text, priority, project_id, sentiment, sentiment_score, status, suggested_answer, transcribed_text, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:29:41.639+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] com.nova.support.service.TicketService   : Sent WebSocket notification for ticket 35 to project 1
+2025-12-10T02:29:41.642+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] c.n.support.controller.TicketController  : Ticket created with ID: 35
+2025-12-10T02:30:11.559+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.support.controller.TicketController  : Creating ticket for project API key: demo-api-key-12345
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.api_key=?
+2025-12-10T02:30:11.568+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:30:14.782+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:30:15.107+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        knowledge_base 
+    WHERE
+        project_id = ? 
+        AND embedding IS NOT NULL 
+    ORDER BY
+        embedding::vector(768) <=> CAST(? AS vector(768)) 
+    LIMIT
+        ?
+2025-12-10T02:30:15.266+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+Hibernate: 
+    insert 
+    into
+        tickets
+        (ai_summary, audio_url, closed_at, created_at, customer_email, customer_name, image_url, operator_id, operator_response, original_text, priority, project_id, sentiment, sentiment_score, status, suggested_answer, transcribed_text, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:30:16.633+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.TicketService   : Sent WebSocket notification for ticket 36 to project 1
+2025-12-10T02:30:16.637+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.support.controller.TicketController  : Ticket created with ID: 36
+2025-12-10T02:31:07.660+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] c.n.support.controller.TicketController  : Creating ticket for project API key: demo-api-key-12345
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.api_key=?
+2025-12-10T02:31:07.714+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] com.nova.support.service.MinioService    : Uploaded byte array to MinIO: fe798fe6-eb69-44fc-8971-89d67c801398-image.png
+2025-12-10T02:31:07.715+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] com.nova.support.service.OllamaService   : Analyzing image with model: gemma3:4b
+2025-12-10T02:31:16.416+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] com.nova.support.service.TicketService   : Image analyzed: На изображении представлен фрагмент подошвы ботинка с серьезным износом. Видно, что рельефная поверхность, которая изначально была предназначена для сцепления с поверхностью, значительно разрушена и потрескалась. Это, скорее всего, фотография проблемы, которую пользователь хочет решить - ремонт подошвы ботинка.  
+
+2025-12-10T02:31:16.417+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:31:18.134+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:31:18.589+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        knowledge_base 
+    WHERE
+        project_id = ? 
+        AND embedding IS NOT NULL 
+    ORDER BY
+        embedding::vector(768) <=> CAST(? AS vector(768)) 
+    LIMIT
+        ?
+2025-12-10T02:31:18.808+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+Hibernate: 
+    insert 
+    into
+        tickets
+        (ai_summary, audio_url, closed_at, created_at, customer_email, customer_name, image_url, operator_id, operator_response, original_text, priority, project_id, sentiment, sentiment_score, status, suggested_answer, transcribed_text, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:31:21.284+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] com.nova.support.service.TicketService   : Sent WebSocket notification for ticket 37 to project 1
+2025-12-10T02:31:21.291+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] c.n.support.controller.TicketController  : Ticket created with ID: 37
+2025-12-10T02:32:42.277+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] c.n.support.controller.TicketController  : Creating ticket for project API key: demo-api-key-12345
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.api_key=?
+2025-12-10T02:32:42.328+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.MinioService    : Uploaded byte array to MinIO: 099e5281-e567-4647-9902-fb28bd4fe502-image.png
+2025-12-10T02:32:42.329+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.OllamaService   : Analyzing image with model: gemma3:4b
+2025-12-10T02:32:50.415+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.TicketService   : Image analyzed: На картинке изображены белые спортивные кроссовки, сильно испачканные грязью и землей. Кроссовки лежат на деревянном полу. Видны и другие детали, такие как синие брюки с яркими зелеными вставками.
+
+2025-12-10T02:32:50.416+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:32:52.728+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:32:53.183+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        knowledge_base 
+    WHERE
+        project_id = ? 
+        AND embedding IS NOT NULL 
+    ORDER BY
+        embedding::vector(768) <=> CAST(? AS vector(768)) 
+    LIMIT
+        ?
+2025-12-10T02:32:53.520+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+Hibernate: 
+    insert 
+    into
+        tickets
+        (ai_summary, audio_url, closed_at, created_at, customer_email, customer_name, image_url, operator_id, operator_response, original_text, priority, project_id, sentiment, sentiment_score, status, suggested_answer, transcribed_text, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:32:55.045+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] com.nova.support.service.TicketService   : Sent WebSocket notification for ticket 38 to project 1
+2025-12-10T02:32:55.048+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] c.n.support.controller.TicketController  : Ticket created with ID: 38
+2025-12-10T02:33:25.387+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] c.n.s.controller.AdminTicketController   : Updating ticket 38 status to: CLOSED
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:33:25.412+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] com.nova.support.service.TicketService   : Updated ticket 38 status to CLOSED
+Hibernate: 
+    update
+        tickets 
+    set
+        ai_summary=?,
+        audio_url=?,
+        closed_at=?,
+        customer_email=?,
+        customer_name=?,
+        image_url=?,
+        operator_id=?,
+        operator_response=?,
+        original_text=?,
+        priority=?,
+        project_id=?,
+        sentiment=?,
+        sentiment_score=?,
+        status=?,
+        suggested_answer=?,
+        transcribed_text=?,
+        updated_at=? 
+    where
+        id=?
+2025-12-10T02:34:33.286+05:00  INFO 12766 --- [support-service] [io-8080-exec-10] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:34:51.053+05:00  INFO 12766 --- [support-service] [nio-8080-exec-8] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:34:55.943+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.s.c.KnowledgeBaseController          : Deleting knowledge base entry: 7
+Hibernate: 
+    select
+        count(*) 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    delete 
+    from
+        knowledge_base 
+    where
+        id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:34:58.403+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:35:08.503+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.support.controller.TicketController  : Creating ticket for project API key: demo-api-key-12345
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.api_key=?
+2025-12-10T02:35:08.512+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:35:11.629+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:35:11.951+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        knowledge_base 
+    WHERE
+        project_id = ? 
+        AND embedding IS NOT NULL 
+    ORDER BY
+        embedding::vector(768) <=> CAST(? AS vector(768)) 
+    LIMIT
+        ?
+2025-12-10T02:35:12.085+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+Hibernate: 
+    insert 
+    into
+        tickets
+        (ai_summary, audio_url, closed_at, created_at, customer_email, customer_name, image_url, operator_id, operator_response, original_text, priority, project_id, sentiment, sentiment_score, status, suggested_answer, transcribed_text, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:35:13.594+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.TicketService   : Sent WebSocket notification for ticket 39 to project 1
+2025-12-10T02:35:13.596+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.support.controller.TicketController  : Ticket created with ID: 39
+2025-12-10T02:35:30.857+05:00  INFO 12766 --- [support-service] [io-8080-exec-10] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:35:35.143+05:00  INFO 12766 --- [support-service] [nio-8080-exec-3] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:36:12.190+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] c.n.s.controller.AdminTicketController   : Deleting ticket: 39
+Hibernate: 
+    select
+        count(*) 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:12.203+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] com.nova.support.service.TicketService   : Deleted ticket: 39
+Hibernate: 
+    delete 
+    from
+        tickets 
+    where
+        id=?
+2025-12-10T02:36:16.774+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] c.n.s.controller.AdminTicketController   : Deleting ticket: 38
+Hibernate: 
+    select
+        count(*) 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:16.785+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] com.nova.support.service.TicketService   : Deleted ticket: 38
+Hibernate: 
+    delete 
+    from
+        tickets 
+    where
+        id=?
+2025-12-10T02:36:20.449+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.s.controller.AdminTicketController   : Deleting ticket: 37
+Hibernate: 
+    select
+        count(*) 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:20.456+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.TicketService   : Deleted ticket: 37
+Hibernate: 
+    delete 
+    from
+        tickets 
+    where
+        id=?
+2025-12-10T02:36:23.424+05:00  INFO 12766 --- [support-service] [nio-8080-exec-3] c.n.s.controller.AdminTicketController   : Deleting ticket: 36
+Hibernate: 
+    select
+        count(*) 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:23.431+05:00  INFO 12766 --- [support-service] [nio-8080-exec-3] com.nova.support.service.TicketService   : Deleted ticket: 36
+Hibernate: 
+    delete 
+    from
+        tickets 
+    where
+        id=?
+2025-12-10T02:36:28.710+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:36:31.354+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:36:46.498+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] c.n.s.controller.AdminTicketController   : Updating ticket 1 status to: OPEN
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:46.508+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] com.nova.support.service.TicketService   : Updated ticket 1 status to OPEN
+2025-12-10T02:36:51.223+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] c.n.s.controller.AdminTicketController   : Updating ticket 1 status to: IN_PROGRESS
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:51.247+05:00 ERROR 12766 --- [support-service] [nio-8080-exec-7] c.n.s.controller.GlobalExceptionHandler  : Unhandled exception:
+
+java.lang.IllegalArgumentException: No enum constant com.nova.support.domain.enums.TicketStatus.IN_PROGRESS
+	at java.base/java.lang.Enum.valueOf(Enum.java:293) ~[na:na]
+	at com.nova.support.domain.enums.TicketStatus.valueOf(TicketStatus.java:6) ~[classes/:na]
+	at com.nova.support.service.TicketService.updateStatus(TicketService.java:145) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar:6.2.0]
+	at com.nova.support.service.TicketService$$SpringCGLIB$$0.updateStatus(<generated>) ~[classes/:na]
+	at com.nova.support.controller.AdminTicketController.updateStatus(AdminTicketController.java:54) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:888) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-12-10T02:36:52.441+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.s.controller.AdminTicketController   : Updating ticket 1 status to: IN_PROGRESS
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:52.454+05:00 ERROR 12766 --- [support-service] [nio-8080-exec-5] c.n.s.controller.GlobalExceptionHandler  : Unhandled exception:
+
+java.lang.IllegalArgumentException: No enum constant com.nova.support.domain.enums.TicketStatus.IN_PROGRESS
+	at java.base/java.lang.Enum.valueOf(Enum.java:293) ~[na:na]
+	at com.nova.support.domain.enums.TicketStatus.valueOf(TicketStatus.java:6) ~[classes/:na]
+	at com.nova.support.service.TicketService.updateStatus(TicketService.java:145) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar:6.2.0]
+	at com.nova.support.service.TicketService$$SpringCGLIB$$0.updateStatus(<generated>) ~[classes/:na]
+	at com.nova.support.controller.AdminTicketController.updateStatus(AdminTicketController.java:54) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:888) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-12-10T02:36:53.280+05:00  INFO 12766 --- [support-service] [nio-8080-exec-3] c.n.s.controller.AdminTicketController   : Updating ticket 1 status to: IN_PROGRESS
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:53.288+05:00 ERROR 12766 --- [support-service] [nio-8080-exec-3] c.n.s.controller.GlobalExceptionHandler  : Unhandled exception:
+
+java.lang.IllegalArgumentException: No enum constant com.nova.support.domain.enums.TicketStatus.IN_PROGRESS
+	at java.base/java.lang.Enum.valueOf(Enum.java:293) ~[na:na]
+	at com.nova.support.domain.enums.TicketStatus.valueOf(TicketStatus.java:6) ~[classes/:na]
+	at com.nova.support.service.TicketService.updateStatus(TicketService.java:145) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar:6.2.0]
+	at com.nova.support.service.TicketService$$SpringCGLIB$$0.updateStatus(<generated>) ~[classes/:na]
+	at com.nova.support.controller.AdminTicketController.updateStatus(AdminTicketController.java:54) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:888) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-12-10T02:36:53.468+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] c.n.s.controller.AdminTicketController   : Updating ticket 1 status to: IN_PROGRESS
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:53.476+05:00 ERROR 12766 --- [support-service] [nio-8080-exec-2] c.n.s.controller.GlobalExceptionHandler  : Unhandled exception:
+
+java.lang.IllegalArgumentException: No enum constant com.nova.support.domain.enums.TicketStatus.IN_PROGRESS
+	at java.base/java.lang.Enum.valueOf(Enum.java:293) ~[na:na]
+	at com.nova.support.domain.enums.TicketStatus.valueOf(TicketStatus.java:6) ~[classes/:na]
+	at com.nova.support.service.TicketService.updateStatus(TicketService.java:145) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar:6.2.0]
+	at com.nova.support.service.TicketService$$SpringCGLIB$$0.updateStatus(<generated>) ~[classes/:na]
+	at com.nova.support.controller.AdminTicketController.updateStatus(AdminTicketController.java:54) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:888) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-12-10T02:36:58.731+05:00  INFO 12766 --- [support-service] [nio-8080-exec-6] c.n.s.controller.AdminTicketController   : Updating ticket 1 status to: IN_PROGRESS
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:36:58.734+05:00 ERROR 12766 --- [support-service] [nio-8080-exec-6] c.n.s.controller.GlobalExceptionHandler  : Unhandled exception:
+
+java.lang.IllegalArgumentException: No enum constant com.nova.support.domain.enums.TicketStatus.IN_PROGRESS
+	at java.base/java.lang.Enum.valueOf(Enum.java:293) ~[na:na]
+	at com.nova.support.domain.enums.TicketStatus.valueOf(TicketStatus.java:6) ~[classes/:na]
+	at com.nova.support.service.TicketService.updateStatus(TicketService.java:145) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar:6.2.0]
+	at com.nova.support.service.TicketService$$SpringCGLIB$$0.updateStatus(<generated>) ~[classes/:na]
+	at com.nova.support.controller.AdminTicketController.updateStatus(AdminTicketController.java:54) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:888) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-12-10T02:37:02.373+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] c.n.s.controller.AdminTicketController   : Updating ticket 1 status to: CLOSED
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:37:02.377+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] com.nova.support.service.TicketService   : Updated ticket 1 status to CLOSED
+Hibernate: 
+    update
+        tickets 
+    set
+        ai_summary=?,
+        audio_url=?,
+        closed_at=?,
+        customer_email=?,
+        customer_name=?,
+        image_url=?,
+        operator_id=?,
+        operator_response=?,
+        original_text=?,
+        priority=?,
+        project_id=?,
+        sentiment=?,
+        sentiment_score=?,
+        status=?,
+        suggested_answer=?,
+        transcribed_text=?,
+        updated_at=? 
+    where
+        id=?
+2025-12-10T02:37:07.075+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.s.controller.AdminTicketController   : Updating ticket 1 status to: OPEN
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.id=?
+2025-12-10T02:37:07.080+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.TicketService   : Updated ticket 1 status to OPEN
+Hibernate: 
+    update
+        tickets 
+    set
+        ai_summary=?,
+        audio_url=?,
+        closed_at=?,
+        customer_email=?,
+        customer_name=?,
+        image_url=?,
+        operator_id=?,
+        operator_response=?,
+        original_text=?,
+        priority=?,
+        project_id=?,
+        sentiment=?,
+        sentiment_score=?,
+        status=?,
+        suggested_answer=?,
+        transcribed_text=?,
+        updated_at=? 
+    where
+        id=?

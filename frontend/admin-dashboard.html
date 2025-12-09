@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Nova Support</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>Nova Support</h1>
+                <span class="badge">Admin</span>
+            </div>
+            
+            <nav class="nav">
+                <a href="#tickets" class="nav-item active" data-view="tickets">
+                    <span class="icon">📋</span>
+                    <span>Тикеты</span>
+                    <span class="count" id="ticketsCount">26</span>
+                </a>
+                <a href="#analytics" class="nav-item" data-view="analytics">
+                    <span class="icon">📊</span>
+                    <span>Аналитика</span>
+                </a>
+                <a href="#knowledge" class="nav-item" data-view="knowledge">
+                    <span class="icon">📚</span>
+                    <span>База знаний</span>
+                    <span class="count" id="kbCount">6</span>
+                </a>
+                <a href="#settings" class="nav-item" data-view="settings">
+                    <span class="icon">⚙️</span>
+                    <span>Настройки</span>
+                </a>
+            </nav>
+            
+            <div class="connection-status">
+                <div id="wsStatus" class="status disconnected">
+                    <span class="dot"></span>
+                    <span class="text">Отключено</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h2 id="viewTitle">Тикеты</h2>
+                <div class="header-actions">
+                    <select id="projectFilter" class="select">
+                        <option value="1">Demo Sneakers Store</option>
+                    </select>
+                    <button class="btn btn-primary" id="refreshBtn">🔄 Обновить</button>
+                </div>
+            </header>
+
+            <!-- Tickets View -->
+            <section id="ticketsView" class="view active">
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Статус:</label>
+                        <select id="statusFilter" class="select">
+                            <option value="">Все</option>
+                            <option value="OPEN">Открыты</option>
+                            <option value="IN_PROGRESS">В работе</option>
+                            <option value="CLOSED">Закрыты</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Приоритет:</label>
+                        <select id="priorityFilter" class="select">
+                            <option value="">Все</option>
+                            <option value="CRITICAL">Критичные</option>
+                            <option value="HIGH">Высокие</option>
+                            <option value="LOW">Низкие</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Настроение:</label>
+                        <select id="sentimentFilter" class="select">
+                            <option value="">Все</option>
+                            <option value="NEGATIVE">Негативные</option>
+                            <option value="NEUTRAL">Нейтральные</option>
+                            <option value="POSITIVE">Позитивные</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <input type="text" id="searchInput" class="input" placeholder="🔍 Поиск по тексту...">
+                    </div>
+                </div>
+
+                <!-- Tickets List -->
+                <div class="tickets-container">
+                    <div id="ticketsList" class="tickets-list">
+                        <!-- Tickets will be inserted here -->
+                    </div>
+                    
+                    <div id="loadingSpinner" class="loading">
+                        <div class="spinner"></div>
+                        <p>Загрузка...</p>
+                    </div>
+                    
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <div class="empty-icon">📭</div>
+                        <h3>Тикетов не найдено</h3>
+                        <p>Попробуйте изменить фильтры</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics View -->
+            <section id="analyticsView" class="view">
+                <div class="analytics-grid">
+                    <!-- Stats Cards -->
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon critical">🔴</div>
+                            <div class="stat-info">
+                                <h3 id="criticalCount">0</h3>
+                                <p>Критичные</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon high">🟠</div>
+                            <div class="stat-info">
+                                <h3 id="highCount">0</h3>
+                                <p>Высокие</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon low">🟢</div>
+                            <div class="stat-info">
+                                <h3 id="lowCount">0</h3>
+                                <p>Низкие</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon total">📊</div>
+                            <div class="stat-info">
+                                <h3 id="totalCount">0</h3>
+                                <p>Всего тикетов</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="chart-card">
+                        <h3>Распределение по приоритетам</h3>
+                        <canvas id="priorityChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h3>Распределение по настроению</h3>
+                        <canvas id="sentimentChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-card wide">
+                        <h3>Тикеты за последние 7 дней</h3>
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Knowledge Base View -->
+            <section id="knowledgeView" class="view">
+                <div class="kb-header">
+                    <button class="btn btn-primary" id="addKbBtn">➕ Добавить статью</button>
+                </div>
+                
+                <div id="kbList" class="kb-list">
+                    <!-- KB articles will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Settings View -->
+            <section id="settingsView" class="view">
+                <div class="settings-card">
+                    <h3>Проект</h3>
+                    <div class="form-group">
+                        <label>Название проекта:</label>
+                        <input type="text" class="input" value="Demo Sneakers Store" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>API ключ:</label>
+                        <input type="text" class="input" value="demo-api-key-12345" readonly>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <h3>WebSocket</h3>
+                    <div class="form-group">
+                        <label>Адрес сервера:</label>
+                        <input type="text" id="wsUrl" class="input" value="http://localhost:8080/ws">
+                    </div>
+                    <button class="btn btn-primary" id="reconnectWs">🔄 Переподключиться</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for ticket details -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTicketTitle">Тикет #</h3>
+                <button class="modal-close" id="closeModal">×</button>
+            </div>
+            <div class="modal-body" id="modalTicketBody">
+                <!-- Ticket details will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="deleteTicketBtn">🗑️ Удалить</button>
+                <button class="btn btn-secondary" id="closeTicketBtn">Закрыть окно</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>

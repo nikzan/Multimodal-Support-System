@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/admin/tickets")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AdminTicketController {
     
     private final TicketService ticketService;

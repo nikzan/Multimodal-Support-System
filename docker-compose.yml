@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  # База данных с поддержкой pgvector для RAG
+  postgres:
+    image: pgvector/pgvector:pg15
+    container_name: support_db
+    environment:
+      POSTGRES_DB: support_service_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: root
+    ports:
+      - "54320:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/01-init.sql
+    command: postgres -c shared_preload_libraries=vector
+
+  # MinIO (S3-compatible хранилище для будущих картинок/аудио)
+  minio:
+    image: minio/minio
+    container_name: support_storage
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  postgres_data:
+  minio_data:

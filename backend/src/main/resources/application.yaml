@@ -1,0 +1,64 @@
+# Название приложения
+spring:
+  application:
+    name: support-service
+
+  # Подключение к базе (которую мы подняли в Docker)
+  datasource:
+    url: jdbc:postgresql://localhost:54320/support_service_db
+    username: admin
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  # JPA / Hibernate настройки
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate  # изменили с update на validate, т.к. используем Flyway
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  # Flyway миграции
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  # Настройки загрузки файлов (лимит 20мб)
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+  # Spring AI Ollama конфигурация (локальные LLM)
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: gemma3:4b
+          temperature: 0.7
+      embedding:
+        options:
+          model: nomic-embed-text
+
+# MinIO конфигурация (S3-совместимое хранилище)
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: support-tickets
+
+# Whisper сервис для транскрибации аудио
+whisper:
+  service-url: http://localhost:5001
+
+# Ollama конфигурация (для нашего OllamaService)
+ollama:
+  base-url: http://localhost:11434
+  model:
+    chat: gemma3:4b
+    embedding: nomic-embed-text

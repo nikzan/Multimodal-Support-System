@@ -164,11 +164,12 @@ public class TicketService {
     private String findSuggestedAnswer(Long projectId, String queryText) {
         try {
             // Получить эмбеддинг вопроса
-            float[] embedding = ollamaService.generateEmbedding(queryText);
+            float[] embeddingArray = ollamaService.generateEmbedding(queryText);
+            String embeddingStr = convertEmbeddingToString(embeddingArray);
             
             // Найти похожие записи в базе знаний
             List<KnowledgeBase> similarKnowledge = knowledgeBaseRepository
-                    .findSimilarByEmbedding(projectId, embedding, 3);
+                    .findSimilarByEmbedding(projectId, embeddingStr, 3);
             
             if (similarKnowledge.isEmpty()) {
                 return "К сожалению, подходящего ответа в базе знаний не найдено.";
@@ -212,5 +213,15 @@ public class TicketService {
                 .imageUrl(ticket.getImageUrl())
                 .createdAt(ticket.getCreatedAt())
                 .build();
+    }
+    
+    private String convertEmbeddingToString(float[] array) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < array.length; i++) {
+            if (i > 0) sb.append(",");
+            sb.append(array[i]);
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

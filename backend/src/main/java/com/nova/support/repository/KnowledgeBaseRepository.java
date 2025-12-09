@@ -51,16 +51,17 @@ public interface KnowledgeBaseRepository extends JpaRepository<KnowledgeBase, Lo
      * Семантический поиск по вектору (для RAG)
      * Найти топ-K наиболее похожих записей используя cosine similarity
      * @param projectId ID проекта
-     * @param queryEmbedding вектор запроса
+     * @param queryEmbedding вектор запроса в формате "[0.1,0.2,...]"
      * @param limit количество результатов
      * @return список записей отсортированных по релевантности
      */
     @Query(value = "SELECT * FROM knowledge_base " +
                    "WHERE project_id = :projectId " +
-                   "ORDER BY embedding <=> CAST(:queryEmbedding AS vector) " +
+                   "AND embedding IS NOT NULL " +
+                   "ORDER BY embedding::vector(768) <=> CAST(:queryEmbedding AS vector(768)) " +
                    "LIMIT :limit", 
            nativeQuery = true)
     List<KnowledgeBase> findSimilarByEmbedding(@Param("projectId") Long projectId,
-                                                @Param("queryEmbedding") float[] queryEmbedding,
+                                                @Param("queryEmbedding") String queryEmbedding,
                                                 @Param("limit") int limit);
 }

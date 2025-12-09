@@ -50,10 +50,10 @@ public class KnowledgeBase {
     /**
      * Vector embedding для семантического поиска
      * Размерность 768 соответствует nomic-embed-text (Ollama)
+     * Храним как String в формате "[1.0,2.0,3.0]"
      */
-    @Column(columnDefinition = "vector(768)")
-    @JdbcTypeCode(SqlTypes.VECTOR)
-    private float[] embedding;
+    @Column(name = "embedding")
+    private String embedding;
     
     /**
      * Тип источника (faq, manual, article, etc.)

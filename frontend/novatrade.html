@@ -252,7 +252,7 @@
         .order-book { background: var(--bg-card); padding: 20px; border-radius: 12px; }
         .order-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; font-family: 'Roboto Mono', monospace; }
 
-        .widget-placeholder-comment { position: fixed; bottom: 20px; right: 20px; background: rgba(255,0,0,0.1); border: 1px dashed red; padding: 10px; border-radius: 8px; color: red; font-size: 12px; z-index: 50; pointer-events: none; }
+
         @media (max-width: 1024px) { .hero h1 { font-size: 56px; } .hero-chart-wrapper { width: 100%; height: 300px; margin-top: 40px; } .hero { flex-direction: column; text-align: center; justify-content: center; } .footer-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
@@ -457,8 +457,6 @@
         </div>
     </div>
 
-    <div class="widget-placeholder-comment">AI Widget Placeholder</div>
-
     <script>
         function switchPage(pageId) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
@@ -579,6 +577,15 @@
 
         init();
         setInterval(init, 10000);
+    </script>
+    <!-- Nova Support Widget -->
+    <link rel="stylesheet" href="support-widget.css">
+    <script src="support-widget.js"></script>
+    <script>
+        NovaSupportWidget.init({
+            apiKey: 'demo-api-key-12345',
+            apiUrl: 'http://localhost:8080'
+        });
     </script>
 </body>
 </html>

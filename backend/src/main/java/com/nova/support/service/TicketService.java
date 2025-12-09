@@ -13,6 +13,9 @@ import com.nova.support.dto.TicketRequest;
 import com.nova.support.dto.TicketResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +34,7 @@ public class TicketService {
     private final WhisperService whisperService;
     private final OllamaService ollamaService;
     private final MinioService minioService;
+    private final SimpMessagingTemplate messagingTemplate;
     
     @Transactional
     public TicketResponse processTicket(TicketRequest request) {
@@ -114,13 +118,45 @@ public class TicketService {
         // 6. Сохранить тикет
         ticket = ticketRepository.save(ticket);
         
-        return mapToResponse(ticket);
+        // 7. Отправить WebSocket уведомление
+        TicketResponse response = mapToResponse(ticket);
+        messagingTemplate.convertAndSend("/topic/tickets/" + project.getId(), response);
+        log.info("Sent WebSocket notification for ticket {} to project {}", ticket.getId(), project.getId());
+        
+        return response;
     }
     
     public TicketResponse getTicket(Long id) {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ticket not found"));
         return mapToResponse(ticket);
+    }
+    
+    public Page<TicketResponse> getTicketsByProject(Long projectId, Pageable pageable) {
+        Page<Ticket> tickets = ticketRepository.findByProjectId(projectId, pageable);
+        return tickets.map(this::mapToResponse);
+    }
+    
+    @Transactional
+    public TicketResponse updateStatus(Long id, String statusStr) {
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found"));
+        
+        TicketStatus status = TicketStatus.valueOf(statusStr.toUpperCase());
+        ticket.setStatus(status);
+        ticket = ticketRepository.save(ticket);
+        
+        log.info("Updated ticket {} status to {}", id, status);
+        return mapToResponse(ticket);
+    }
+    
+    @Transactional
+    public void deleteTicket(Long id) {
+        if (!ticketRepository.existsById(id)) {
+            throw new RuntimeException("Ticket not found");
+        }
+        ticketRepository.deleteById(id);
+        log.info("Deleted ticket: {}", id);
     }
     
     private void parseSentiment(Ticket ticket, String sentimentAnalysis) {

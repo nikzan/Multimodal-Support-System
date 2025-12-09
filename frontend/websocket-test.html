@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test - Support System</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .connected {
+            background: #d4edda;
+            color: #155724;
+        }
+        .disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .ticket {
+            background: #e3f2fd;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+        }
+        .ticket-high {
+            border-left-color: #f44336;
+        }
+        .ticket-low {
+            border-left-color: #4CAF50;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #tickets {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 WebSocket Test - Support System</h1>
+        
+        <div id="status" class="status disconnected">❌ Disconnected</div>
+        
+        <div style="margin: 20px 0;">
+            <label>Project ID: 
+                <input type="number" id="projectId" value="1" style="padding: 5px;">
+            </label>
+            <button onclick="connect()">Connect</button>
+            <button onclick="disconnect()">Disconnect</button>
+            <button onclick="createTestTicket()">Create Test Ticket</button>
+        </div>
+        
+        <h2>📬 Real-time Notifications:</h2>
+        <div id="tickets"></div>
+    </div>
+
+    <script>
+        let stompClient = null;
+        let projectId = 1;
+
+        function connect() {
+            projectId = document.getElementById('projectId').value;
+            const socket = new SockJS('http://localhost:8080/ws');
+            stompClient = Stomp.over(socket);
+            
+            stompClient.connect({}, function(frame) {
+                console.log('Connected: ' + frame);
+                document.getElementById('status').className = 'status connected';
+                document.getElementById('status').textContent = '✅ Connected to project ' + projectId;
+                
+                // Подписываемся на уведомления проекта
+                stompClient.subscribe('/topic/tickets/' + projectId, function(message) {
+                    const ticket = JSON.parse(message.body);
+                    showTicket(ticket);
+                });
+            });
+        }
+
+        function disconnect() {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+            }
+            document.getElementById('status').className = 'status disconnected';
+            document.getElementById('status').textContent = '❌ Disconnected';
+            console.log('Disconnected');
+        }
+
+        function showTicket(ticket) {
+            const ticketsDiv = document.getElementById('tickets');
+            const ticketDiv = document.createElement('div');
+            ticketDiv.className = 'ticket ticket-' + ticket.priority.toLowerCase();
+            
+            const time = new Date(ticket.createdAt).toLocaleTimeString('ru-RU');
+            
+            ticketDiv.innerHTML = `
+                <strong>Ticket #${ticket.id}</strong> 
+                <span style="float: right; color: #666;">${time}</span>
+                <br>
+                <strong>Priority:</strong> ${ticket.priority} | 
+                <strong>Sentiment:</strong> ${ticket.sentiment}
+                <br>
+                <strong>Text:</strong> ${ticket.originalText || ticket.transcribedText}
+                <br>
+                <strong>AI Summary:</strong> ${ticket.aiSummary}
+                <br>
+                <strong>Suggested Answer:</strong> ${ticket.suggestedAnswer}
+            `;
+            
+            ticketsDiv.insertBefore(ticketDiv, ticketsDiv.firstChild);
+        }
+
+        function createTestTicket() {
+            const testTexts = [
+                'Не работает доставка! Жду уже 5 дней!',
+                'Подскажите размер для стопы 26.5 см?',
+                'Спасибо за быструю доставку!',
+                'Можно ли вернуть товар?'
+            ];
+            
+            const randomText = testTexts[Math.floor(Math.random() * testTexts.length)];
+            
+            fetch('http://localhost:8080/api/tickets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    projectApiKey: 'demo-api-key-12345',
+                    text: randomText
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Ticket created:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error creating ticket. Check console.');
+            });
+        }
+
+        // Автоподключение при загрузке страницы
+        window.onload = function() {
+            connect();
+        };
+    </script>
+</body>
+</html>

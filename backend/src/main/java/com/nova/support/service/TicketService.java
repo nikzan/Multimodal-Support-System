@@ -1,16 +1,22 @@
 package com.nova.support.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nova.support.domain.entity.KnowledgeBase;
 import com.nova.support.domain.entity.Project;
 import com.nova.support.domain.entity.Ticket;
+import com.nova.support.domain.entity.ChatMessage;
 import com.nova.support.domain.enums.Priority;
 import com.nova.support.domain.enums.Sentiment;
 import com.nova.support.domain.enums.TicketStatus;
 import com.nova.support.repository.KnowledgeBaseRepository;
 import com.nova.support.repository.ProjectRepository;
 import com.nova.support.repository.TicketRepository;
+import com.nova.support.repository.ChatMessageRepository;
 import com.nova.support.dto.TicketRequest;
 import com.nova.support.dto.TicketResponse;
+import com.nova.support.dto.RagAnswerResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,8 +26,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,10 +40,12 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final ProjectRepository projectRepository;
     private final KnowledgeBaseRepository knowledgeBaseRepository;
+    private final ChatMessageRepository chatMessageRepository;
     private final WhisperService whisperService;
     private final OllamaService ollamaService;
     private final MinioService minioService;
     private final SimpMessagingTemplate messagingTemplate;
+    private final ObjectMapper objectMapper;
     
     @Transactional
     public TicketResponse processTicket(TicketRequest request) {
@@ -45,6 +56,14 @@ public class TicketService {
         Ticket ticket = new Ticket();
         ticket.setProject(project);
         ticket.setStatus(TicketStatus.OPEN);
+        ticket.setIsClosed(false);
+        
+        // Установить session ID (из запроса или сгенерировать новый)
+        if (request.getSessionId() != null && !request.getSessionId().isEmpty()) {
+            ticket.setSessionId(request.getSessionId());
+        } else {
+            ticket.setSessionId(java.util.UUID.randomUUID().toString());
+        }
         
         String fullText = "";
         
@@ -63,14 +82,26 @@ public class TicketService {
                 String audioUrl = minioService.uploadFile(audioBytes, "audio.webm", "audio/webm");
                 ticket.setAudioUrl(audioUrl);
                 
-                // Транскрибировать через Whisper
-                String transcription = whisperService.transcribe(audioBytes, request.getLanguage());
-                ticket.setTranscribedText(transcription);
-                fullText += " " + transcription;
+                // Транскрибировать через Whisper (только если файл больше 1KB)
+                if (audioBytes.length > 1024) {
+                    try {
+                        String transcription = whisperService.transcribe(audioBytes, request.getLanguage());
+                        if (transcription != null && !transcription.trim().isEmpty()) {
+                            ticket.setTranscribedText(transcription);
+                            fullText += " " + transcription;
+                            log.info("Audio transcribed successfully: {} bytes -> {} chars", audioBytes.length, transcription.length());
+                        }
+                    } catch (Exception whisperError) {
+                        log.warn("Whisper transcription failed, continuing without transcription: {}", whisperError.getMessage());
+                        // Продолжаем без транскрипции, не прерываем создание тикета
+                    }
+                } else {
+                    log.warn("Audio file too small for transcription: {} bytes", audioBytes.length);
+                }
                 
-                log.info("Audio transcribed: {}", transcription);
             } catch (Exception e) {
                 log.error("Failed to process audio", e);
+                // Не прерываем создание тикета из-за ошибки аудио
             }
         }
         
@@ -118,7 +149,36 @@ public class TicketService {
         // 6. Сохранить тикет
         ticket = ticketRepository.save(ticket);
         
-        // 7. Отправить WebSocket уведомление
+        // 7. Создать первое сообщение клиента в чате
+        if (!fullText.isEmpty()) {
+            ChatMessage firstMessage = new ChatMessage();
+            firstMessage.setTicketId(ticket.getId());
+            firstMessage.setSenderType(ChatMessage.SenderType.CLIENT);
+            firstMessage.setMessage(fullText);
+            firstMessage.setImageUrl(ticket.getImageUrl());
+            firstMessage.setAudioUrl(ticket.getAudioUrl());
+            
+            // Сохранить транскрипцию в metadata если есть аудио
+            if (ticket.getTranscribedText() != null && !ticket.getTranscribedText().isEmpty()) {
+                try {
+                    String metadata = objectMapper.writeValueAsString(
+                        java.util.Map.of("transcription", ticket.getTranscribedText())
+                    );
+                    firstMessage.setMetadata(metadata);
+                } catch (JsonProcessingException e) {
+                    log.error("Failed to serialize metadata", e);
+                }
+            }
+            
+            firstMessage = chatMessageRepository.save(firstMessage);
+            
+            // Добавить первое сообщение в RAG bucket
+            addMessageToBucket(ticket.getId(), firstMessage.getId());
+            
+            log.info("Created first chat message for ticket {}", ticket.getId());
+        }
+        
+        // 8. Отправить WebSocket уведомление
         TicketResponse response = mapToResponse(ticket);
         messagingTemplate.convertAndSend("/topic/tickets/" + project.getId(), response);
         log.info("Sent WebSocket notification for ticket {} to project {}", ticket.getId(), project.getId());
@@ -157,6 +217,38 @@ public class TicketService {
         }
         ticketRepository.deleteById(id);
         log.info("Deleted ticket: {}", id);
+    }
+    
+    /**
+     * Найти активный тикет по session ID
+     */
+    public TicketResponse getActiveTicketBySession(String sessionId) {
+        List<Ticket> tickets = ticketRepository.findActiveTicketsBySessionId(sessionId);
+        if (tickets.isEmpty()) {
+            return null;
+        }
+        return mapToResponse(tickets.get(0));
+    }
+    
+    /**
+     * Закрыть тикет
+     */
+    @Transactional
+    public TicketResponse closeTicket(Long id) {
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found"));
+        
+        ticket.setIsClosed(true);
+        ticket.setStatus(TicketStatus.CLOSED);
+        ticket = ticketRepository.save(ticket);
+        
+        log.info("Closed ticket: {}", id);
+        
+        // Отправить WebSocket уведомление о закрытии
+        TicketResponse response = mapToResponse(ticket);
+        messagingTemplate.convertAndSend("/topic/tickets/" + id + "/closed", response);
+        
+        return response;
     }
     
     private void parseSentiment(Ticket ticket, String sentimentAnalysis) {
@@ -219,9 +311,16 @@ public class TicketService {
             
             // Сгенерировать ответ на основе контекста
             String prompt = String.format(
-                "На основе следующей информации из базы знаний:\n\n%s\n\n" +
-                "Ответь на вопрос пользователя: %s\n\n" +
-                "Дай краткий и понятный ответ.",
+                "Ты - ассистент службы поддержки. Используй ТОЛЬКО информацию из базы знаний ниже для ответа.\n\n" +
+                "База знаний:\n%s\n\n" +
+                "Вопрос клиента: %s\n\n" +
+                "ВАЖНО:\n" +
+                "- Отвечай ТОЛЬКО на основе предоставленной информации\n" +
+                "- Если в базе знаний НЕТ точного ответа на вопрос, скажи: 'К сожалению, у меня нет информации по этому вопросу'\n" +
+                "- НЕ додумывай и НЕ добавляй информацию, которой нет в базе знаний\n" +
+                "- Будь точным, очень вежливым и тактичным\n" +
+                "- Используй дружелюбный и профессиональный тон общения\n\n" +
+                "Ответ:",
                 context.toString(), queryText
             );
             
@@ -236,6 +335,7 @@ public class TicketService {
     private TicketResponse mapToResponse(Ticket ticket) {
         return TicketResponse.builder()
                 .id(ticket.getId())
+                .sessionId(ticket.getSessionId())
                 .originalText(ticket.getOriginalText())
                 .transcribedText(ticket.getTranscribedText())
                 .aiSummary(ticket.getAiSummary())
@@ -245,6 +345,7 @@ public class TicketService {
                 .priority(ticket.getPriority())
                 .suggestedAnswer(ticket.getSuggestedAnswer())
                 .status(ticket.getStatus())
+                .isClosed(ticket.getIsClosed())
                 .audioUrl(ticket.getAudioUrl())
                 .imageUrl(ticket.getImageUrl())
                 .createdAt(ticket.getCreatedAt())
@@ -260,4 +361,122 @@ public class TicketService {
         sb.append("]");
         return sb.toString();
     }
+    
+    // ===== RAG Bucket Methods =====
+    
+    /**
+     * Добавить сообщение в RAG bucket
+     */
+    public void addMessageToBucket(Long ticketId, Long messageId) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+            .orElseThrow(() -> new RuntimeException("Ticket not found: " + ticketId));
+        
+        String currentBucket = ticket.getRagBucketMessageIds();
+        if (currentBucket == null || currentBucket.isEmpty()) {
+            ticket.setRagBucketMessageIds(String.valueOf(messageId));
+        } else {
+            ticket.setRagBucketMessageIds(currentBucket + "," + messageId);
+        }
+        
+        ticketRepository.save(ticket);
+        log.info("Added message {} to RAG bucket for ticket {}", messageId, ticketId);
+        
+        // Send WebSocket notification that RAG needs update
+        messagingTemplate.convertAndSend(
+            "/topic/tickets/" + ticketId + "/rag-updated",
+            "RAG answer needs refresh"
+        );
+    }
+    
+    /**
+     * Очистить RAG bucket (после ответа оператора)
+     */
+    public void clearBucket(Long ticketId) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+            .orElseThrow(() -> new RuntimeException("Ticket not found: " + ticketId));
+        
+        ticket.setRagBucketMessageIds(null);
+        ticket.setLastOperatorResponseAt(LocalDateTime.now());
+        ticketRepository.save(ticket);
+        
+        log.info("Cleared RAG bucket for ticket {}", ticketId);
+    }
+    
+    /**
+     * Генерация RAG ответа для accumulated messages
+     */
+    public RagAnswerResponse generateRagAnswer(Long ticketId) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+            .orElseThrow(() -> new RuntimeException("Ticket not found: " + ticketId));
+        
+        String bucketIds = ticket.getRagBucketMessageIds();
+        if (bucketIds == null || bucketIds.isEmpty()) {
+            return RagAnswerResponse.builder()
+                .answer("Нет новых сообщений для анализа")
+                .messagesCount(0)
+                .lastUpdated(LocalDateTime.now())
+                .messageIds("")
+                .build();
+        }
+        
+        // Parse message IDs
+        List<Long> messageIds = Arrays.stream(bucketIds.split(","))
+            .map(String::trim)
+            .filter(s -> !s.isEmpty())
+            .map(Long::parseLong)
+            .collect(Collectors.toList());
+        
+        // Load messages
+        List<ChatMessage> messages = chatMessageRepository.findAllById(messageIds);
+        
+        if (messages.isEmpty()) {
+            return RagAnswerResponse.builder()
+                .answer("Сообщения не найдены")
+                .messagesCount(0)
+                .lastUpdated(LocalDateTime.now())
+                .messageIds(bucketIds)
+                .build();
+        }
+        
+        // Build context from messages
+        StringBuilder context = new StringBuilder();
+        for (ChatMessage msg : messages) {
+            context.append("Клиент: ").append(msg.getMessage()).append("\n");
+            
+            // Add transcription/description if exists in metadata
+            if (msg.getMetadata() != null && !msg.getMetadata().isEmpty()) {
+                try {
+                    JsonNode metadata = objectMapper.readTree(msg.getMetadata());
+                    if (metadata.has("transcription")) {
+                        context.append("(Транскрипция аудио: ")
+                               .append(metadata.get("transcription").asText())
+                               .append(")\n");
+                    }
+                    if (metadata.has("imageDescription")) {
+                        context.append("(Описание изображения: ")
+                               .append(metadata.get("imageDescription").asText())
+                               .append(")\n");
+                    }
+                } catch (JsonProcessingException e) {
+                    log.warn("Failed to parse metadata for message {}", msg.getId(), e);
+                }
+            }
+        }
+        
+        // Search knowledge base for context
+        String kbContext = findSuggestedAnswer(ticket.getProject().getId(), context.toString());
+        
+        // Use existing suggested answer or generate new one
+        String ragAnswer = kbContext != null && !kbContext.isEmpty() 
+            ? kbContext 
+            : "На основе новых сообщений рекомендуем проверить статус запроса клиента.";
+        
+        return RagAnswerResponse.builder()
+            .answer(ragAnswer)
+            .messagesCount(messages.size())
+            .lastUpdated(LocalDateTime.now())
+            .messageIds(bucketIds)
+            .build();
+    }
 }
+

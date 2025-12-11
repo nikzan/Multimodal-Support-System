@@ -2037,3 +2037,827 @@ Hibernate:
         updated_at=? 
     where
         id=?
+2025-12-10T02:40:38.905+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] c.n.s.c.KnowledgeBaseController          : Deleting knowledge base entry: 4
+Hibernate: 
+    select
+        count(*) 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    delete 
+    from
+        knowledge_base 
+    where
+        id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T02:44:52.466+05:00  INFO 12766 --- [support-service] [MessageBroker-7] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 105], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 29], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 2, completed tasks = 424]
+2025-12-10T02:51:11.316+05:00  INFO 12766 --- [support-service] [nio-8080-exec-8] c.n.support.controller.TicketController  : Creating ticket for project API key: demo-api-key-12345
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.api_key=?
+2025-12-10T02:51:11.336+05:00  INFO 12766 --- [support-service] [nio-8080-exec-8] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:51:16.921+05:00  INFO 12766 --- [support-service] [nio-8080-exec-8] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:51:17.635+05:00  INFO 12766 --- [support-service] [nio-8080-exec-8] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+2025-12-10T02:51:18.170+05:00 ERROR 12766 --- [support-service] [nio-8080-exec-8] com.nova.support.service.OllamaService   : Error generating embedding
+
+org.springframework.web.reactive.function.client.WebClientResponseException$InternalServerError: 500 Internal Server Error from POST http://localhost:11434/api/embeddings
+	at org.springframework.web.reactive.function.client.WebClientResponseException.create(WebClientResponseException.java:332) ~[spring-webflux-6.2.0.jar:6.2.0]
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ 500 INTERNAL_SERVER_ERROR from POST http://localhost:11434/api/embeddings [DefaultWebClient]
+Original Stack Trace:
+		at org.springframework.web.reactive.function.client.WebClientResponseException.create(WebClientResponseException.java:332) ~[spring-webflux-6.2.0.jar:6.2.0]
+		at org.springframework.web.reactive.function.client.DefaultClientResponse.lambda$createException$1(DefaultClientResponse.java:214) ~[spring-webflux-6.2.0.jar:6.2.0]
+		at reactor.core.publisher.FluxMap$MapSubscriber.onNext(FluxMap.java:106) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber.onNext(FluxOnErrorReturn.java:162) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:122) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:129) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:299) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.Operators$BaseFluxToMonoOperator.completePossiblyEmpty(Operators.java:2097) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:145) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:144) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:260) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:144) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:413) ~[reactor-netty-core-1.2.0.jar:1.2.0]
+		at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:455) ~[reactor-netty-core-1.2.0.jar:1.2.0]
+		at reactor.netty.channel.ChannelOperations.terminate(ChannelOperations.java:509) ~[reactor-netty-core-1.2.0.jar:1.2.0]
+		at reactor.netty.http.client.HttpClientOperations.onInboundNext(HttpClientOperations.java:817) ~[reactor-netty-http-1.2.0.jar:1.2.0]
+		at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:115) ~[reactor-netty-core-1.2.0.jar:1.2.0]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:444) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:444) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1357) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:440) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:868) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.115.Final.jar:4.1.115.Final]
+		at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+	Suppressed: java.lang.Exception: #block terminated with an error
+		at reactor.core.publisher.BlockingSingleSubscriber.blockingGet(BlockingSingleSubscriber.java:104) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.Mono.block(Mono.java:1779) ~[reactor-core-3.7.0.jar:3.7.0]
+		at com.nova.support.service.OllamaService.generateEmbedding(OllamaService.java:145) ~[classes/:na]
+		at com.nova.support.service.TicketService.findSuggestedAnswer(TicketService.java:203) ~[classes/:na]
+		at com.nova.support.service.TicketService.processTicket(TicketService.java:114) ~[classes/:na]
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+		at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.0.jar:6.2.0]
+		at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.0.jar:6.2.0]
+		at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.0.jar:6.2.0]
+		at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.0.jar:6.2.0]
+		at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar:6.2.0]
+		at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar:6.2.0]
+		at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar:6.2.0]
+		at com.nova.support.service.TicketService$$SpringCGLIB$$0.processTicket(<generated>) ~[classes/:na]
+		at com.nova.support.controller.TicketController.createTicket(TicketController.java:24) ~[classes/:na]
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+		at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.33.jar:6.0]
+		at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-12-10T02:51:18.175+05:00 ERROR 12766 --- [support-service] [nio-8080-exec-8] com.nova.support.service.TicketService   : Failed to find suggested answer
+
+java.lang.RuntimeException: Failed to generate embedding: 500 Internal Server Error from POST http://localhost:11434/api/embeddings
+	at com.nova.support.service.OllamaService.generateEmbedding(OllamaService.java:160) ~[classes/:na]
+	at com.nova.support.service.TicketService.findSuggestedAnswer(TicketService.java:203) ~[classes/:na]
+	at com.nova.support.service.TicketService.processTicket(TicketService.java:114) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar:6.2.0]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar:6.2.0]
+	at com.nova.support.service.TicketService$$SpringCGLIB$$0.processTicket(<generated>) ~[classes/:na]
+	at com.nova.support.controller.TicketController.createTicket(TicketController.java:24) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.0.jar:6.2.0]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.springframework.web.reactive.function.client.WebClientResponseException$InternalServerError: 500 Internal Server Error from POST http://localhost:11434/api/embeddings
+	at org.springframework.web.reactive.function.client.WebClientResponseException.create(WebClientResponseException.java:332) ~[spring-webflux-6.2.0.jar:6.2.0]
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ 500 INTERNAL_SERVER_ERROR from POST http://localhost:11434/api/embeddings [DefaultWebClient]
+Original Stack Trace:
+		at org.springframework.web.reactive.function.client.WebClientResponseException.create(WebClientResponseException.java:332) ~[spring-webflux-6.2.0.jar:6.2.0]
+		at org.springframework.web.reactive.function.client.DefaultClientResponse.lambda$createException$1(DefaultClientResponse.java:214) ~[spring-webflux-6.2.0.jar:6.2.0]
+		at reactor.core.publisher.FluxMap$MapSubscriber.onNext(FluxMap.java:106) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber.onNext(FluxOnErrorReturn.java:162) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxDefaultIfEmpty$DefaultIfEmptySubscriber.onNext(FluxDefaultIfEmpty.java:122) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:129) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:107) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableConditionalSubscriber.onNext(FluxMapFuseable.java:299) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxFilterFuseable$FilterFuseableConditionalSubscriber.onNext(FluxFilterFuseable.java:337) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.Operators$BaseFluxToMonoOperator.completePossiblyEmpty(Operators.java:2097) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.MonoCollect$CollectSubscriber.onComplete(MonoCollect.java:145) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:144) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onComplete(FluxPeek.java:260) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.FluxMap$MapSubscriber.onComplete(FluxMap.java:144) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.netty.channel.FluxReceive.onInboundComplete(FluxReceive.java:413) ~[reactor-netty-core-1.2.0.jar:1.2.0]
+		at reactor.netty.channel.ChannelOperations.onInboundComplete(ChannelOperations.java:455) ~[reactor-netty-core-1.2.0.jar:1.2.0]
+		at reactor.netty.channel.ChannelOperations.terminate(ChannelOperations.java:509) ~[reactor-netty-core-1.2.0.jar:1.2.0]
+		at reactor.netty.http.client.HttpClientOperations.onInboundNext(HttpClientOperations.java:817) ~[reactor-netty-http-1.2.0.jar:1.2.0]
+		at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:115) ~[reactor-netty-core-1.2.0.jar:1.2.0]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:444) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:107) ~[netty-codec-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:444) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1357) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:440) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:868) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.115.Final.jar:4.1.115.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.115.Final.jar:4.1.115.Final]
+		at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+	Suppressed: java.lang.Exception: #block terminated with an error
+		at reactor.core.publisher.BlockingSingleSubscriber.blockingGet(BlockingSingleSubscriber.java:104) ~[reactor-core-3.7.0.jar:3.7.0]
+		at reactor.core.publisher.Mono.block(Mono.java:1779) ~[reactor-core-3.7.0.jar:3.7.0]
+		at com.nova.support.service.OllamaService.generateEmbedding(OllamaService.java:145) ~[classes/:na]
+		at com.nova.support.service.TicketService.findSuggestedAnswer(TicketService.java:203) ~[classes/:na]
+		at com.nova.support.service.TicketService.processTicket(TicketService.java:114) ~[classes/:na]
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+		at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.0.jar:6.2.0]
+		at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.0.jar:6.2.0]
+		at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.0.jar:6.2.0]
+		at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.0.jar:6.2.0]
+		at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar:6.2.0]
+		at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar:6.2.0]
+		at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar:6.2.0]
+		at com.nova.support.service.TicketService$$SpringCGLIB$$0.processTicket(<generated>) ~[classes/:na]
+		at com.nova.support.controller.TicketController.createTicket(TicketController.java:24) ~[classes/:na]
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+		at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.33.jar:6.0]
+		at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.0.jar:6.2.0]
+		at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar:6.0]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar:6.2.0]
+		at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar:10.1.33]
+		at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+Hibernate: 
+    insert 
+    into
+        tickets
+        (ai_summary, audio_url, closed_at, created_at, customer_email, customer_name, image_url, operator_id, operator_response, original_text, priority, project_id, sentiment, sentiment_score, status, suggested_answer, transcribed_text, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:51:18.195+05:00  INFO 12766 --- [support-service] [nio-8080-exec-8] com.nova.support.service.TicketService   : Sent WebSocket notification for ticket 40 to project 1
+2025-12-10T02:51:18.202+05:00  INFO 12766 --- [support-service] [nio-8080-exec-8] c.n.support.controller.TicketController  : Ticket created with ID: 40
+2025-12-10T02:55:25.903+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.support.controller.TicketController  : Creating ticket for project API key: demo-api-key-12345
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.api_key,
+        p1_0.created_at,
+        p1_0.name,
+        p1_0.updated_at,
+        p1_0.website_url 
+    from
+        projects p1_0 
+    where
+        p1_0.api_key=?
+2025-12-10T02:55:25.931+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:55:30.023+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+2025-12-10T02:55:30.606+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating embedding with model: nomic-embed-text
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        knowledge_base 
+    WHERE
+        project_id = ? 
+        AND embedding IS NOT NULL 
+    ORDER BY
+        embedding::vector(768) <=> CAST(? AS vector(768)) 
+    LIMIT
+        ?
+2025-12-10T02:55:31.247+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.OllamaService   : Generating text with model: gemma3:4b
+Hibernate: 
+    insert 
+    into
+        tickets
+        (ai_summary, audio_url, closed_at, created_at, customer_email, customer_name, image_url, operator_id, operator_response, original_text, priority, project_id, sentiment, sentiment_score, status, suggested_answer, transcribed_text, updated_at) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-10T02:55:34.485+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] com.nova.support.service.TicketService   : Sent WebSocket notification for ticket 41 to project 1
+2025-12-10T02:55:34.490+05:00  INFO 12766 --- [support-service] [nio-8080-exec-5] c.n.support.controller.TicketController  : Ticket created with ID: 41
+2025-12-10T02:58:15.887+05:00  INFO 12766 --- [support-service] [nio-8080-exec-3] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T03:00:48.365+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T03:00:53.685+05:00  INFO 12766 --- [support-service] [nio-8080-exec-9] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T03:17:48.113+05:00  WARN 12766 --- [support-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m27s799ms).
+2025-12-10T03:21:33.927+05:00  WARN 12766 --- [support-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m45s818ms).
+2025-12-10T03:34:06.090+05:00  INFO 12766 --- [support-service] [MessageBroker-4] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 824]
+2025-12-10T04:04:06.078+05:00  INFO 12766 --- [support-service] [MessageBroker-3] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 1185]
+2025-12-10T04:34:06.134+05:00  INFO 12766 --- [support-service] [MessageBroker-5] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 1546]
+2025-12-10T05:04:06.144+05:00  INFO 12766 --- [support-service] [MessageBroker-6] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 1907]
+2025-12-10T05:34:06.136+05:00  INFO 12766 --- [support-service] [MessageBroker-3] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 2268]
+2025-12-10T06:04:06.151+05:00  INFO 12766 --- [support-service] [essageBroker-10] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 2629]
+2025-12-10T06:34:06.240+05:00  INFO 12766 --- [support-service] [MessageBroker-9] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 2990]
+2025-12-10T07:04:06.302+05:00  INFO 12766 --- [support-service] [essageBroker-10] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 3351]
+2025-12-10T07:34:06.368+05:00  INFO 12766 --- [support-service] [MessageBroker-5] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 3712]
+2025-12-10T08:04:06.401+05:00  INFO 12766 --- [support-service] [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 4073]
+2025-12-10T08:34:06.425+05:00  INFO 12766 --- [support-service] [MessageBroker-5] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 4434]
+2025-12-10T09:04:06.362+05:00  INFO 12766 --- [support-service] [MessageBroker-8] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 4795]
+2025-12-10T09:34:06.352+05:00  INFO 12766 --- [support-service] [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 5156]
+2025-12-10T10:04:06.378+05:00  INFO 12766 --- [support-service] [MessageBroker-5] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 5517]
+2025-12-10T10:34:06.407+05:00  INFO 12766 --- [support-service] [MessageBroker-9] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 5878]
+2025-12-10T11:04:06.352+05:00  INFO 12766 --- [support-service] [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 6239]
+2025-12-10T11:34:06.356+05:00  INFO 12766 --- [support-service] [MessageBroker-6] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 6600]
+2025-12-10T12:04:06.374+05:00  INFO 12766 --- [support-service] [MessageBroker-8] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 6961]
+2025-12-10T12:34:06.433+05:00  INFO 12766 --- [support-service] [MessageBroker-5] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 12 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(12)-CONNECTED(12)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 108], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 32], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 1, completed tasks = 7322]
+2025-12-10T12:49:23.554+05:00  WARN 12766 --- [support-service] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m42s352ms).
+2025-12-10T12:51:07.566+05:00  INFO 12766 --- [support-service] [nio-8080-exec-7] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T12:51:11.780+05:00  INFO 12766 --- [support-service] [nio-8080-exec-4] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+2025-12-10T12:55:32.312+05:00  INFO 12766 --- [support-service] [nio-8080-exec-1] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+2025-12-10T12:56:25.194+05:00  INFO 12766 --- [support-service] [nio-8080-exec-2] c.n.s.controller.AdminTicketController   : Getting tickets for project: 1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.ai_summary,
+        t1_0.audio_url,
+        t1_0.closed_at,
+        t1_0.created_at,
+        t1_0.customer_email,
+        t1_0.customer_name,
+        t1_0.image_url,
+        t1_0.operator_id,
+        t1_0.operator_response,
+        t1_0.original_text,
+        t1_0.priority,
+        t1_0.project_id,
+        t1_0.sentiment,
+        t1_0.sentiment_score,
+        t1_0.status,
+        t1_0.suggested_answer,
+        t1_0.transcribed_text,
+        t1_0.updated_at 
+    from
+        tickets t1_0 
+    where
+        t1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.project_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+Hibernate: 
+    select
+        kb1_0.id,
+        kb1_0.content,
+        kb1_0.created_at,
+        kb1_0.embedding,
+        kb1_0.project_id,
+        kb1_0.source_type,
+        kb1_0.source_url,
+        kb1_0.title,
+        kb1_0.updated_at 
+    from
+        knowledge_base kb1_0 
+    where
+        kb1_0.id=?
+2025-12-10T13:11:18.826+05:00  INFO 12766 --- [support-service] [MessageBroker-4] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 14 total, 0 closed abnormally (0 connect failure, 0 send limit, 1 transport error)], stompSubProtocol[processed CONNECT(14)-CONNECTED(14)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 123], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 35], sockJsScheduler[pool size = 10, active threads = 1, queued tasks = 2, completed tasks = 7720]
+2025-12-10T13:12:18.517+05:00  INFO 12766 --- [support-service] [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-10T13:12:18.520+05:00  INFO 12766 --- [support-service] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-12-10T13:12:18.526+05:00  INFO 12766 --- [support-service] [ionShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2025-12-10T13:12:18.526+05:00  INFO 12766 --- [support-service] [ionShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@551ae26a]]
+2025-12-10T13:12:18.526+05:00  INFO 12766 --- [support-service] [ionShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2025-12-10T13:12:20.623+05:00  INFO 12766 --- [support-service] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10T13:12:20.627+05:00  INFO 12766 --- [support-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-10T13:12:20.629+05:00  INFO 12766 --- [support-service] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

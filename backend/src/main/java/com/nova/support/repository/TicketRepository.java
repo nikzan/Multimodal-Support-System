@@ -56,4 +56,11 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
      */
     @Query("SELECT t FROM Ticket t WHERE t.status = 'NEW' ORDER BY t.createdAt ASC")
     List<Ticket> findNewTicketsForProcessing();
+    
+    /**
+     * Найти активный (незакрытый) тикет по session ID
+     */
+    @Query("SELECT t FROM Ticket t WHERE t.sessionId = :sessionId AND t.isClosed = false ORDER BY t.createdAt DESC")
+    List<Ticket> findActiveTicketsBySessionId(String sessionId);
 }
+

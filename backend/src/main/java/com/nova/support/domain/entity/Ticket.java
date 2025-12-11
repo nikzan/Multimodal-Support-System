@@ -123,6 +123,36 @@ public class Ticket {
     @Column(name = "operator_id")
     private Long operatorId;
     
+    // === Chat Session ===
+    
+    /**
+     * Session ID для связи тикетов одного клиента
+     */
+    @Column(name = "session_id")
+    private String sessionId;
+    
+    /**
+     * Флаг закрытия тикета
+     */
+    @Column(name = "is_closed")
+    @Builder.Default
+    private Boolean isClosed = false;
+    
+    // === RAG Bucket для накопления сообщений ===
+    
+    /**
+     * Timestamp последнего ответа оператора (для определения границы bucket)
+     */
+    @Column(name = "last_operator_response_at")
+    private LocalDateTime lastOperatorResponseAt;
+    
+    /**
+     * Список ID сообщений в RAG bucket (накапливаются после ответа оператора)
+     * Хранится как строка с разделителями
+     */
+    @Column(name = "rag_bucket_message_ids", columnDefinition = "TEXT")
+    private String ragBucketMessageIds;
+    
     // === Временные метки ===
     
     @CreationTimestamp

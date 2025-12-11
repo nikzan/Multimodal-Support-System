@@ -65,7 +65,7 @@ public class WhisperService {
                 }
             });
             
-            if (language != null && !language.isEmpty()) {
+            if (language != null && !language.isEmpty() && !language.equalsIgnoreCase("auto")) {
                 builder.part("language", language);
             }
             

@@ -578,13 +578,17 @@
         init();
         setInterval(init, 10000);
     </script>
-    <!-- Nova Support Widget -->
-    <link rel="stylesheet" href="support-widget.css">
-    <script src="support-widget.js"></script>
+    
+    <!-- Nova Support Chat Widget -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script src="support-widget-chat.js"></script>
     <script>
         NovaSupportWidget.init({
             apiKey: 'demo-api-key-12345',
-            apiUrl: 'http://localhost:8080'
+            apiUrl: 'http://localhost:8080',
+            wsUrl: 'http://localhost:8080/ws',
+            primaryColor: '#6366f1'
         });
     </script>
 </body>

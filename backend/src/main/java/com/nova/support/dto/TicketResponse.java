@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class TicketResponse {
     private Long id;
+    private String sessionId;
     private String originalText;
     private String transcribedText;
     private String aiSummary;
@@ -20,7 +21,9 @@ public class TicketResponse {
     private Priority priority;
     private String suggestedAnswer;
     private TicketStatus status;
+    private Boolean isClosed;
     private String audioUrl;
     private String imageUrl;
     private LocalDateTime createdAt;
 }
+

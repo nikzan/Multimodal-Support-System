@@ -42,8 +42,6 @@ class AdminDashboard {
         document.getElementById('refreshBtn').addEventListener('click', () => this.loadTickets());
         document.getElementById('reconnectWs').addEventListener('click', () => this.connectWebSocket());
         document.getElementById('closeModal').addEventListener('click', () => this.closeModal());
-        document.getElementById('closeTicketBtn').addEventListener('click', () => this.closeModal());
-        document.getElementById('deleteTicketBtn').addEventListener('click', () => this.deleteCurrentTicket());
         document.getElementById('addKbBtn').addEventListener('click', () => this.showAddKbModal());
     }
 
@@ -220,96 +218,353 @@ class AdminDashboard {
         const modal = document.getElementById('ticketModal');
         const title = document.getElementById('modalTicketTitle');
         const body = document.getElementById('modalTicketBody');
+        const deleteBtn = document.getElementById('deleteTicketBtn');
 
-        title.textContent = `Тикет #${ticket.id}`;
+        title.textContent = `Тикет #${ticket.id} - Чат с клиентом`;
         
-        const minioUrl = 'http://localhost:9000/support-tickets/';
-        const imageUrl = ticket.imageUrl ? (ticket.imageUrl.startsWith('http') ? ticket.imageUrl : minioUrl + ticket.imageUrl) : null;
-        const audioUrl = ticket.audioUrl ? (ticket.audioUrl.startsWith('http') ? ticket.audioUrl : minioUrl + ticket.audioUrl) : null;
+        if (deleteBtn) {
+            deleteBtn.style.display = 'inline-block';
+            deleteBtn.onclick = () => {
+                this.closeModal();
+                this.deleteTicket(ticketId);
+            };
+        }
         
         body.innerHTML = `
-            <div class="ticket-details">
-                <div class="detail-row">
-                    <strong>Статус:</strong>
-                    <select class="select" id="modalStatus">
-                        <option value="OPEN" ${ticket.status === 'OPEN' ? 'selected' : ''}>Открыт</option>
-                        <option value="IN_PROGRESS" ${ticket.status === 'IN_PROGRESS' ? 'selected' : ''}>В работе</option>
-                        <option value="CLOSED" ${ticket.status === 'CLOSED' ? 'selected' : ''}>Закрыт</option>
-                    </select>
-                </div>
-                
-                <div class="detail-row">
-                    <strong>Приоритет:</strong>
-                    <span class="badge badge-${ticket.priority.toLowerCase()}">${ticket.priority}</span>
-                </div>
-                
-                <div class="detail-row">
-                    <strong>Настроение:</strong>
-                    <span class="badge badge-${ticket.sentiment.toLowerCase()}">${this.getSentimentIcon(ticket.sentiment)} ${ticket.sentiment}</span>
-                </div>
-                
-                <div class="detail-row">
-                    <strong>Создан:</strong>
-                    <span>${this.formatDate(ticket.createdAt)}</span>
-                </div>
-                
-                <div class="detail-section">
-                    <strong>Текст обращения:</strong>
-                    <p>${this.escapeHtml(ticket.originalText || 'Нет текста')}</p>
-                </div>
-                
-                ${ticket.transcribedText ? `
-                    <div class="detail-section">
-                        <strong>🎤 Транскрипция аудио:</strong>
-                        <p style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-style: italic;">${this.escapeHtml(ticket.transcribedText)}</p>
+            <div class="ticket-chat-layout">
+                <!-- Left: Chat -->
+                <div class="chat-column">
+                    <div class="chat-header-info">
+                        <span class="badge badge-${ticket.status.toLowerCase()}">${ticket.status}</span>
+                        <span class="badge badge-${ticket.priority.toLowerCase()}">${ticket.priority}</span>
+                        <span class="badge badge-${ticket.sentiment.toLowerCase()}">${this.getSentimentIcon(ticket.sentiment)}</span>
                     </div>
-                ` : ''}
-                
-                ${ticket.aiSummary ? `
-                    <div class="detail-section">
-                        <strong>AI Резюме:</strong>
-                        <p>${this.escapeHtml(ticket.aiSummary)}</p>
-                    </div>
-                ` : ''}
-                
-                ${ticket.suggestedAnswer ? `
-                    <div class="detail-section">
-                        <strong>Предложенный ответ:</strong>
-                        <p>${this.escapeHtml(ticket.suggestedAnswer)}</p>
-                    </div>
-                ` : ''}
-                
-                ${imageUrl ? `
-                    <div class="detail-section">
-                        <strong>Изображение:</strong><br>
-                        <div class="image-container">
-                            <img src="${imageUrl}" alt="Attachment" style="max-width: 100%; border-radius: 8px; margin-top: 8px;" 
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <p style="display:none; color:#ef4444; margin-top:8px;">❌ Изображение недоступно</p>
+                    
+                    <div class="chat-messages-area" id="chatMessagesContainer">
+                        <div id="chatMessages">
+                            <div style="text-align: center; color: #999; padding: 20px;">Загрузка сообщений...</div>
                         </div>
-                        <br><a href="${imageUrl}" target="_blank" style="font-size: 12px; color: #667eea;">🔗 Открыть в новой вкладке</a>
                     </div>
-                ` : ''}
-                
-                ${audioUrl ? `
-                    <div class="detail-section">
-                        <strong>Аудио:</strong><br>
-                        <div class="audio-container">
-                            <audio controls src="${audioUrl}" style="width: 100%; margin-top: 8px;"
-                                   onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"></audio>
-                            <p style="display:none; color:#ef4444; margin-top:8px;">❌ Аудио недоступно</p>
+                    
+                    <div class="chat-input-area">
+                        <textarea 
+                            id="operatorMessageInput" 
+                            placeholder="Введите ответ клиенту..."
+                            rows="3"
+                        ></textarea>
+                        <div class="chat-actions">
+                            <div class="chat-actions-left">
+                                <button class="btn btn-primary" onclick="dashboard.sendOperatorMessage()">💬 Отправить</button>
+                            </div>
+                            <div class="chat-actions-right">
+                                <button class="btn btn-danger" onclick="dashboard.deleteTicket(${ticketId})" title="Удалить тикет">🗑️ Удалить</button>
+                                <button class="btn" onclick="dashboard.closeTicketFromChat()">🔒 Закрыть тикет</button>
+                            </div>
                         </div>
-                        <br><a href="${audioUrl}" target="_blank" style="font-size: 12px; color: #667eea;">🔗 Открыть в новой вкладке</a>
                     </div>
-                ` : ''}
+                </div>
                 
-                <div class="detail-actions">
-                    <button class="btn btn-primary" onclick="dashboard.updateTicketStatus()">💾 Сохранить изменения</button>
+                <!-- Right: AI Panel -->
+                <div class="ai-panel">
+                    <div class="ai-section">
+                        <h4>📝 AI Summary (первое сообщение)</h4>
+                        <div class="ai-summary">
+                            ${ticket.aiSummary ? this.escapeHtml(ticket.aiSummary) : '<em style="color: #999;">Нет резюме</em>'}
+                        </div>
+                    </div>
+                    
+                    <div class="ai-section rag-section">
+                        <div class="rag-header">
+                            <h4>🤖 RAG Ответ</h4>
+                            <button class="btn btn-sm" onclick="dashboard.refreshRagAnswer()" id="refreshRagBtn">🔄</button>
+                        </div>
+                        <div class="rag-answer" id="ragAnswer">
+                            <div style="text-align: center; color: #999; padding: 20px;">Загрузка...</div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="dashboard.insertRagAnswer()" style="width: 100%; margin-top: 12px;">
+                            ⬅️ Вставить RAG ответ
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
 
         modal.classList.add('active');
+        
+        // Load chat messages
+        await this.loadChatMessages(ticket.id);
+        
+        // Load RAG answer
+        await this.loadRagAnswer(ticket.id);
+        
+        // Subscribe to new messages
+        this.subscribeToChatMessages(ticket.id);
+    }
+    
+    toggleTicketDetails() {
+        const details = document.getElementById('ticketDetailsExpanded');
+        const btn = document.getElementById('toggleDetailsBtn');
+        if (details.style.display === 'none') {
+            details.style.display = 'block';
+            btn.textContent = '📋 Скрыть';
+        } else {
+            details.style.display = 'none';
+            btn.textContent = '📋 Детали';
+        }
+    }
+    
+    async loadChatMessages(ticketId) {
+        try {
+            const response = await fetch(`${this.apiUrl}/tickets/${ticketId}/messages`);
+            if (!response.ok) throw new Error('Failed to load messages');
+            
+            const messages = await response.json();
+            this.renderChatMessages(messages);
+        } catch (error) {
+            console.error('Error loading chat messages:', error);
+            document.getElementById('chatMessages').innerHTML = '<div style="text-align: center; color: #ef4444; padding: 20px;">Ошибка загрузки сообщений</div>';
+        }
+    }
+    
+    renderChatMessages(messages) {
+        const container = document.getElementById('chatMessages');
+        
+        if (messages.length === 0) {
+            container.innerHTML = '<div style="text-align: center; color: #999; padding: 20px;">Нет сообщений</div>';
+            return;
+        }
+        
+        const minioUrl = 'http://localhost:9000/support-tickets/';
+        
+        container.innerHTML = messages.map(msg => {
+            const isOperator = msg.senderType === 'OPERATOR';
+            const alignStyle = isOperator ? 'flex-start' : 'flex-end';
+            const bgColor = isOperator ? '#f3f4f6' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            const textColor = isOperator ? '#333' : 'white';
+            const borderRadius = isOperator ? '16px 16px 16px 4px' : '16px 16px 4px 16px';
+            
+            // Get transcription and image description from metadata
+            let transcription = '';
+            let hasTranscription = false;
+            let imageDescription = '';
+            if (msg.metadata) {
+                try {
+                    const metadata = typeof msg.metadata === 'string' ? JSON.parse(msg.metadata) : msg.metadata;
+                    
+                    // Транскрипция аудио
+                    if (metadata.transcription) {
+                        hasTranscription = true;
+                        transcription = `<div style="margin-top: 4px; font-size: 12px; font-style: italic; color: #999; line-height: 1.4;">
+                            🎤 ${this.escapeHtml(metadata.transcription)}
+                        </div>`;
+                    }
+                    
+                    // Описание изображения
+                    if (metadata.imageDescription) {
+                        imageDescription = `<div style="margin-top: 4px; font-size: 12px; font-style: italic; color: #999; line-height: 1.4;">
+                            🖼️ ${this.escapeHtml(metadata.imageDescription)}
+                        </div>`;
+                    }
+                } catch (e) {
+                    console.error('Failed to parse metadata:', e);
+                }
+            }
+            
+            // Показывать основной текст только если это не "Голосовое сообщение" с транскрипцией
+            const showMainMessage = !(hasTranscription && (msg.message === 'Голосовое сообщение' || msg.message.includes('Голосовое')));
+            
+            return `
+                <div style="display: flex; justify-content: ${alignStyle}; margin-bottom: 12px;">
+                    <div style="max-width: 70%;">
+                        <div style="background: ${bgColor}; color: ${textColor}; padding: 12px 16px; border-radius: ${borderRadius};">
+                            ${showMainMessage ? `<p style="margin: 0; font-size: 14px; line-height: 1.5;">${this.escapeHtml(msg.message)}</p>` : ''}
+                            ${msg.audioUrl ? `<audio controls src="${minioUrl}${msg.audioUrl}" style="width: 100%; margin-top: ${showMainMessage ? '8px' : '0'};"></audio>` : ''}
+                            ${msg.imageUrl ? `<img src="${minioUrl}${msg.imageUrl}" style="max-width: 100%; border-radius: 8px; margin-top: 8px;">` : ''}
+                        </div>
+                        ${transcription}
+                        ${imageDescription}
+                        <div style="font-size: 11px; color: #999; margin-top: 4px; text-align: ${isOperator ? 'left' : 'right'};">
+                            ${this.formatTime(msg.createdAt)}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        // Scroll to bottom
+        const messagesContainer = document.getElementById('chatMessagesContainer');
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    subscribeToChatMessages(ticketId) {
+        if (!this.stompClient || !this.stompClient.connected) {
+            console.warn('WebSocket not connected, cannot subscribe to chat messages');
+            return;
+        }
+        
+        // Unsubscribe from previous chat if any
+        if (this.chatSubscription) {
+            this.chatSubscription.unsubscribe();
+        }
+        
+        if (this.ragSubscription) {
+            this.ragSubscription.unsubscribe();
+        }
+        
+        // Subscribe to chat messages
+        this.chatSubscription = this.stompClient.subscribe(
+            `/topic/tickets/${ticketId}/messages`,
+            (message) => {
+                const msg = JSON.parse(message.body);
+                console.log('New chat message received:', msg);
+                this.loadChatMessages(ticketId);
+            }
+        );
+        
+        // Subscribe to RAG updates
+        this.ragSubscription = this.stompClient.subscribe(
+            `/topic/tickets/${ticketId}/rag-updated`,
+            (message) => {
+                console.log('RAG update notification received');
+                this.loadRagAnswer(ticketId);
+            }
+        );
+    }
+    
+    async sendOperatorMessage() {
+        const input = document.getElementById('operatorMessageInput');
+        const text = input.value.trim();
+        
+        if (!text) {
+            alert('Введите сообщение');
+            return;
+        }
+        
+        try {
+            const payload = {
+                ticketId: this.currentTicket.id,
+                senderType: 'OPERATOR',
+                senderName: 'Support Team',
+                message: text
+            };
+            
+            const response = await fetch(`${this.apiUrl}/tickets/${this.currentTicket.id}/messages`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            if (!response.ok) throw new Error('Failed to send message');
+            
+            input.value = '';
+            // Message will be rendered via WebSocket subscription
+            
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('Ошибка отправки сообщения');
+        }
+    }
+    
+    insertAiAnswer() {
+        if (!this.currentTicket || !this.currentTicket.suggestedAnswer) {
+            alert('Нет предложенного AI ответа');
+            return;
+        }
+        
+        const input = document.getElementById('operatorMessageInput');
+        input.value = this.currentTicket.suggestedAnswer;
+        input.focus();
+    }
+    
+    async closeTicketFromChat() {
+        if (!confirm('Закрыть этот тикет? Клиент не сможет отправлять новые сообщения.')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`${this.apiUrl}/tickets/${this.currentTicket.id}/close`, {
+                method: 'PATCH'
+            });
+            
+            if (!response.ok) throw new Error('Failed to close ticket');
+            
+            alert('Тикет закрыт');
+            this.closeModal();
+            this.loadTickets();
+            
+        } catch (error) {
+            console.error('Error closing ticket:', error);
+            alert('Ошибка закрытия тикета');
+        }
+    }
+    
+    formatTime(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString('ru-RU', { 
+            day: '2-digit',
+            month: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    
+    async loadRagAnswer(ticketId) {
+        try {
+            const ragAnswer = document.getElementById('ragAnswer');
+            ragAnswer.innerHTML = '<div style="text-align: center; color: #999; padding: 20px;">Загрузка...</div>';
+            
+            const response = await fetch(`http://localhost:8080/api/tickets/${ticketId}/rag-answer`);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to load RAG answer: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.messagesCount > 0) {
+                ragAnswer.setAttribute('data-answer', data.answer);
+                ragAnswer.innerHTML = `
+                    <p>${this.escapeHtml(data.answer)}</p>
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8;">
+                        📊 ${data.messagesCount} сообщений • Обновлено: ${new Date(data.lastUpdated).toLocaleTimeString('ru-RU')}
+                    </div>
+                `;
+            } else {
+                ragAnswer.removeAttribute('data-answer');
+                ragAnswer.innerHTML = '<em style="color: #999;">Нет новых сообщений для анализа</em>';
+            }
+        } catch (error) {
+            console.error('Error loading RAG answer:', error);
+            document.getElementById('ragAnswer').innerHTML = '<em style="color: #ef4444;">Ошибка загрузки RAG</em>';
+        }
+    }
+    
+    async refreshRagAnswer() {
+        if (!this.currentTicket) return;
+        
+        const btn = document.getElementById('refreshRagBtn');
+        btn.disabled = true;
+        btn.textContent = '⏳';
+        
+        await this.loadRagAnswer(this.currentTicket.id);
+        
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = '🔄';
+        }, 500);
+    }
+    
+    insertRagAnswer() {
+        const ragAnswer = document.getElementById('ragAnswer');
+        const textarea = document.getElementById('operatorMessageInput');
+        const text = ragAnswer.getAttribute('data-answer');
+        
+        if (text && text.trim()) {
+            textarea.value = text;
+            textarea.focus();
+        } else {
+            alert('Нет RAG ответа для вставки');
+        }
     }
 
     async updateTicketStatus() {
@@ -337,24 +592,32 @@ class AdminDashboard {
         }
     }
 
-    async deleteCurrentTicket() {
-        if (!confirm(`Удалить тикет #${this.currentTicket.id}?`)) return;
+    async deleteTicket(ticketId) {
+        if (!confirm(`Удалить тикет #${ticketId}?`)) return;
 
         try {
-            const response = await fetch(`${this.apiUrl}/admin/tickets/${this.currentTicket.id}`, {
+            const response = await fetch(`${this.apiUrl}/admin/tickets/${ticketId}`, {
                 method: 'DELETE'
             });
 
             if (response.ok) {
-                this.tickets = this.tickets.filter(t => t.id !== this.currentTicket.id);
+                this.tickets = this.tickets.filter(t => t.id !== ticketId);
                 this.applyFilters();
                 this.updateTicketsCount();
                 this.showNotification('Успех', 'Тикет удален');
-                this.closeModal();
+                if (this.currentTicket && this.currentTicket.id === ticketId) {
+                    this.closeModal();
+                }
             }
         } catch (error) {
             console.error('Error deleting ticket:', error);
             this.showError('Ошибка удаления тикета');
+        }
+    }
+    
+    async deleteCurrentTicket() {
+        if (this.currentTicket) {
+            await this.deleteTicket(this.currentTicket.id);
         }
     }
 
@@ -494,12 +757,15 @@ class AdminDashboard {
             }
             
             container.innerHTML = articles.map(article => `
-                <div class="kb-card">
+                <div class="kb-card" onclick="dashboard.showKbArticle(${article.id})" style="cursor: pointer;">
                     <h3>${this.escapeHtml(article.title)}</h3>
                     <p>${this.escapeHtml(article.content.substring(0, 200))}...</p>
                     <div class="kb-footer">
                         <span>${this.formatDate(article.createdAt)}</span>
-                        <button class="btn btn-sm btn-danger" onclick="dashboard.deleteKbArticle(${article.id})">🗑️</button>
+                        <div class="kb-actions">
+                            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation(); dashboard.showKbArticle(${article.id})">Просмотр</button>
+                            <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); dashboard.deleteKbArticle(${article.id})">Удалить</button>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -585,7 +851,7 @@ class AdminDashboard {
         const deleteBtn = document.getElementById('deleteTicketBtn');
         
         title.textContent = 'Добавить статью в БЗ';
-        deleteBtn.style.display = 'none';
+        if (deleteBtn) deleteBtn.style.display = 'none';
         
         body.innerHTML = `
             <div class="kb-form">
@@ -666,6 +932,59 @@ class AdminDashboard {
         } catch (error) {
             console.error('Error deleting KB article:', error);
             this.showError(`Ошибка удаления: ${error.message}`);
+        }
+    }
+
+    async showKbArticle(articleId) {
+        try {
+            const response = await fetch(`${this.apiUrl}/admin/knowledge-base/${articleId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const article = await response.json();
+            
+            const modal = document.getElementById('ticketModal');
+            const title = document.getElementById('modalTicketTitle');
+            const body = document.getElementById('modalTicketBody');
+            const deleteBtn = document.getElementById('deleteTicketBtn');
+            
+            title.textContent = article.title;
+            if (deleteBtn) {
+                deleteBtn.style.display = 'inline-block';
+                deleteBtn.onclick = () => {
+                    this.closeModal();
+                    this.deleteKbArticle(articleId);
+                };
+            }
+            
+            body.innerHTML = `
+                <div class="kb-article-view">
+                    <div class="detail-section">
+                        <strong>Создано:</strong>
+                        <p>${this.formatDate(article.createdAt)}</p>
+                    </div>
+                    
+                    ${article.tags && article.tags.length > 0 ? `
+                        <div class="detail-section">
+                            <strong>Теги:</strong>
+                            <div class="kb-tags">
+                                ${article.tags.map(tag => `<span class="kb-tag">${this.escapeHtml(tag)}</span>`).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="detail-section">
+                        <strong>Содержание:</strong>
+                        <div class="kb-content">${this.escapeHtml(article.content).replace(/\n/g, '<br>')}</div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        } catch (error) {
+            console.error('Error loading KB article:', error);
+            this.showError(`Ошибка загрузки: ${error.message}`);
         }
     }
 }

@@ -7,6 +7,7 @@ import com.nova.support.domain.entity.KnowledgeBase;
 import com.nova.support.domain.entity.Project;
 import com.nova.support.domain.entity.Ticket;
 import com.nova.support.domain.entity.ChatMessage;
+import com.nova.support.domain.entity.ChatMessage.SenderType;
 import com.nova.support.domain.enums.Priority;
 import com.nova.support.domain.enums.Sentiment;
 import com.nova.support.domain.enums.TicketStatus;
@@ -17,6 +18,7 @@ import com.nova.support.repository.ChatMessageRepository;
 import com.nova.support.dto.TicketRequest;
 import com.nova.support.dto.TicketResponse;
 import com.nova.support.dto.RagAnswerResponse;
+import com.nova.support.dto.ChatMessageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -106,6 +108,7 @@ public class TicketService {
         }
         
         // 4. Обработка изображения (если есть)
+        String imageDescription = null;
         if (request.getImageBase64() != null && !request.getImageBase64().isEmpty()) {
             try {
                 byte[] imageBytes = Base64.getDecoder().decode(request.getImageBase64());
@@ -115,9 +118,9 @@ public class TicketService {
                 ticket.setImageUrl(imageUrl);
                 
                 // Описать изображение через Ollama (gemma3:4b поддерживает vision)
-                String imageDescription = ollamaService.analyzeImage(imageBytes, 
+                imageDescription = ollamaService.analyzeImage(imageBytes, 
                     "Опиши что изображено на этой картинке. Это скриншот или фото проблемы пользователя.");
-                fullText += " [Изображение: " + imageDescription + "]";
+                // НЕ добавляем в fullText - будет в metadata
                 
                 log.info("Image analyzed: {}", imageDescription);
             } catch (Exception e) {
@@ -141,8 +144,8 @@ public class TicketService {
             Priority priority = determinePriority(ticket.getSentiment(), fullText);
             ticket.setPriority(priority);
             
-            // RAG: поиск подходящего ответа из базы знаний
-            String suggestedAnswer = findSuggestedAnswer(project.getId(), fullText);
+            // RAG: поиск подходящего ответа из базы знаний (первый ответ - нужно приветствие)
+            String suggestedAnswer = findSuggestedAnswer(project.getId(), fullText, true);
             ticket.setSuggestedAnswer(suggestedAnswer);
         }
         
@@ -158,12 +161,17 @@ public class TicketService {
             firstMessage.setImageUrl(ticket.getImageUrl());
             firstMessage.setAudioUrl(ticket.getAudioUrl());
             
-            // Сохранить транскрипцию в metadata если есть аудио
-            if (ticket.getTranscribedText() != null && !ticket.getTranscribedText().isEmpty()) {
+            // Сохранить транскрипцию и описание изображения в metadata
+            if ((ticket.getTranscribedText() != null && !ticket.getTranscribedText().isEmpty()) || imageDescription != null) {
                 try {
-                    String metadata = objectMapper.writeValueAsString(
-                        java.util.Map.of("transcription", ticket.getTranscribedText())
-                    );
+                    java.util.Map<String, String> metadataMap = new java.util.HashMap<>();
+                    if (ticket.getTranscribedText() != null && !ticket.getTranscribedText().isEmpty()) {
+                        metadataMap.put("transcription", ticket.getTranscribedText());
+                    }
+                    if (imageDescription != null) {
+                        metadataMap.put("imageDescription", imageDescription);
+                    }
+                    String metadata = objectMapper.writeValueAsString(metadataMap);
                     firstMessage.setMetadata(metadata);
                 } catch (JsonProcessingException e) {
                     log.error("Failed to serialize metadata", e);
@@ -215,6 +223,14 @@ public class TicketService {
         if (!ticketRepository.existsById(id)) {
             throw new RuntimeException("Ticket not found");
         }
+        
+        // Сначала закрываем тикет (отправляется прощальное сообщение)
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+        if (!ticket.getIsClosed()) {
+            closeTicket(id);
+        }
+        
+        // Затем удаляем
         ticketRepository.deleteById(id);
         log.info("Deleted ticket: {}", id);
     }
@@ -243,6 +259,24 @@ public class TicketService {
         ticket = ticketRepository.save(ticket);
         
         log.info("Closed ticket: {}", id);
+        
+        // Отправить прощальное сообщение клиенту
+        ChatMessage farewellMessage = new ChatMessage();
+        farewellMessage.setTicketId(id);
+        farewellMessage.setSenderType(SenderType.OPERATOR);
+        farewellMessage.setSenderName("Служба поддержки");
+        farewellMessage.setMessage(
+            "Спасибо за обращение!. "
+            + "Если у вас возникнут ещё вопросы, мы всегда рады помочь. "
+            + "До свидания! 😊"
+        );
+        ChatMessage savedFarewell = chatMessageRepository.save(farewellMessage);
+        
+        // Отправить прощальное сообщение через WebSocket
+        messagingTemplate.convertAndSend(
+            "/topic/tickets/" + id + "/messages", 
+            ChatMessageResponse.from(savedFarewell)
+        );
         
         // Отправить WebSocket уведомление о закрытии
         TicketResponse response = mapToResponse(ticket);
@@ -290,6 +324,10 @@ public class TicketService {
     }
     
     private String findSuggestedAnswer(Long projectId, String queryText) {
+        return findSuggestedAnswer(projectId, queryText, false);
+    }
+    
+    private String findSuggestedAnswer(Long projectId, String queryText, boolean isFirstResponse) {
         try {
             // Получить эмбеддинг вопроса
             float[] embeddingArray = ollamaService.generateEmbedding(queryText);
@@ -310,6 +348,10 @@ public class TicketService {
             }
             
             // Сгенерировать ответ на основе контекста
+            String greetingInstruction = isFirstResponse 
+                ? "- Начни ответ с вежливого приветствия\n"
+                : "- НЕ используй приветствие, так как это продолжение диалога\n";
+            
             String prompt = String.format(
                 "Ты - ассистент службы поддержки. Используй ТОЛЬКО информацию из базы знаний ниже для ответа.\n\n" +
                 "База знаний:\n%s\n\n" +
@@ -319,9 +361,10 @@ public class TicketService {
                 "- Если в базе знаний НЕТ точного ответа на вопрос, скажи: 'К сожалению, у меня нет информации по этому вопросу'\n" +
                 "- НЕ додумывай и НЕ добавляй информацию, которой нет в базе знаний\n" +
                 "- Будь точным, очень вежливым и тактичным\n" +
-                "- Используй дружелюбный и профессиональный тон общения\n\n" +
+                "- Используй дружелюбный и профессиональный тон общения\n" +
+                "%s" +
                 "Ответ:",
-                context.toString(), queryText
+                context.toString(), queryText, greetingInstruction
             );
             
             return ollamaService.generateText(prompt);
@@ -463,8 +506,18 @@ public class TicketService {
             }
         }
         
+        // Проверяем есть ли уже ответы от оператора в тикете
+        boolean hasOperatorResponses = chatMessageRepository.existsByTicketIdAndSenderType(
+            ticketId, 
+            SenderType.OPERATOR
+        );
+        
         // Search knowledge base for context
-        String kbContext = findSuggestedAnswer(ticket.getProject().getId(), context.toString());
+        String kbContext = findSuggestedAnswer(
+            ticket.getProject().getId(), 
+            context.toString(),
+            !hasOperatorResponses // Если оператор ещё не отвечал - это первый ответ
+        );
         
         // Use existing suggested answer or generate new one
         String ragAnswer = kbContext != null && !kbContext.isEmpty() 

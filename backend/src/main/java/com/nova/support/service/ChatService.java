@@ -46,13 +46,19 @@ public class ChatService {
         message.setImageUrl(request.getImageUrl());
         message.setAudioUrl(request.getAudioUrl());
         
-        // Сохранить транскрипцию в metadata если есть
-        if (request.getTranscription() != null && !request.getTranscription().isEmpty()) {
+        // Сохранить транскрипцию и описание изображения в metadata
+        if ((request.getTranscription() != null && !request.getTranscription().isEmpty()) 
+            || (request.getImageDescription() != null && !request.getImageDescription().isEmpty())) {
             try {
                 com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-                String metadata = mapper.writeValueAsString(
-                    java.util.Map.of("transcription", request.getTranscription())
-                );
+                java.util.Map<String, String> metadataMap = new java.util.HashMap<>();
+                if (request.getTranscription() != null && !request.getTranscription().isEmpty()) {
+                    metadataMap.put("transcription", request.getTranscription());
+                }
+                if (request.getImageDescription() != null && !request.getImageDescription().isEmpty()) {
+                    metadataMap.put("imageDescription", request.getImageDescription());
+                }
+                String metadata = mapper.writeValueAsString(metadataMap);
                 message.setMetadata(metadata);
             } catch (Exception e) {
                 log.error("Failed to serialize metadata", e);

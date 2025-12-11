@@ -205,7 +205,19 @@
                 const response = await fetch(`${this.apiUrl}/api/tickets/${ticketId}/messages`);
                 if (!response.ok) throw new Error('Failed to load chat history');
                 
-                this.messages = await response.json();
+                const serverMessages = await response.json();
+                
+                // Удаляем оптимистичные сообщения, так как реальные пришли с сервера
+                this.messages = this.messages.filter(m => !m._isOptimistic);
+                
+                // Добавляем сообщения с сервера, избегая дубликатов
+                serverMessages.forEach(msg => {
+                    const exists = this.messages.find(m => m.id === msg.id);
+                    if (!exists) {
+                        this.messages.push(msg);
+                    }
+                });
+                
                 this.renderMessages();
             } catch (error) {
                 console.error('Error loading chat history:', error);
@@ -218,6 +230,9 @@
             
             this.stompClient.connect({}, () => {
                 console.log('WebSocket connected');
+                
+                // Загружаем историю сообщений чтобы заменить оптимистичные
+                this.loadChatHistory(ticketId);
                 
                 // Подписка на новые сообщения
                 this.subscription = this.stompClient.subscribe(
@@ -241,8 +256,14 @@
         }
 
         handleNewMessage(message) {
-            // Добавляем только сообщения оператора (свои уже есть)
-            if (message.senderType === 'OPERATOR') {
+            // Удаляем оптимистичное сообщение если пришло настоящее CLIENT сообщение
+            if (message.senderType === 'CLIENT') {
+                this.messages = this.messages.filter(m => !m._isOptimistic);
+            }
+            
+            // Проверяем что сообщение ещё не добавлено
+            const exists = this.messages.find(m => m.id === message.id);
+            if (!exists) {
                 this.messages.push(message);
                 this.renderMessages();
                 this.scrollToBottom();
@@ -269,12 +290,33 @@
                 const isOperator = msg.senderType === 'OPERATOR';
                 const messageClass = isOperator ? 'message-operator' : 'message-client';
                 
+                // Обработка временных вложений
+                let imageHtml = '';
+                let audioHtml = '';
+                
+                if (msg.imageUrl) {
+                    if (msg.imageUrl === 'TEMP_IMAGE' && msg._tempImage) {
+                        imageHtml = `<img src="${msg._tempImage}" alt="Attachment" style="opacity: 0.7;">`;
+                    } else {
+                        imageHtml = `<img src="http://localhost:9000/support-tickets/${msg.imageUrl}" alt="Attachment">`;
+                    }
+                }
+                
+                if (msg.audioUrl) {
+                    if (msg.audioUrl === 'TEMP_AUDIO' && msg._tempAudio) {
+                        const tempUrl = URL.createObjectURL(msg._tempAudio);
+                        audioHtml = `<audio controls src="${tempUrl}" style="opacity: 0.7;"></audio>`;
+                    } else {
+                        audioHtml = `<audio controls src="http://localhost:9000/support-tickets/${msg.audioUrl}"></audio>`;
+                    }
+                }
+                
                 return `
-                    <div class="chat-message ${messageClass}">
+                    <div class="chat-message ${messageClass}" data-msg-id="${msg.id || ''}">
                         <div class="message-content">
                             <p>${this.escapeHtml(msg.message)}</p>
-                            ${msg.imageUrl ? `<img src="http://localhost:9000/support-tickets/${msg.imageUrl}" alt="Attachment">` : ''}
-                            ${msg.audioUrl ? `<audio controls src="http://localhost:9000/support-tickets/${msg.audioUrl}"></audio>` : ''}
+                            ${imageHtml}
+                            ${audioHtml}
                         </div>
                         <div class="message-time">${this.formatTime(msg.createdAt)}</div>
                     </div>
@@ -306,9 +348,6 @@
                     await this.sendChatMessage(text);
                 }
                 
-                input.value = '';
-                this.clearAttachments();
-                
             } catch (error) {
                 console.error('Error sending message:', error);
                 this.showError('Не удалось отправить сообщение. Пожалуйста, попробуйте ещё раз.');
@@ -316,11 +355,35 @@
         }
 
         async createTicket(text) {
+            // Сохраняем ссылки на файлы перед очисткой UI
+            const savedAudioBlob = this.recordedAudioBlob;
+            const savedImage = this.selectedImage;
+            
             let ticketMessageText = text;
             if (!text) {
-                if (this.recordedAudioBlob) ticketMessageText = 'Голосовое сообщение';
-                else if (this.selectedImage) ticketMessageText = 'Изображение';
+                if (savedAudioBlob) ticketMessageText = 'Голосовое сообщение';
+                else if (savedImage) ticketMessageText = 'Изображение';
             }
+            
+            // Оптимистичное отображение сообщения
+            const optimisticMessage = {
+                senderType: 'CLIENT',
+                message: ticketMessageText,
+                createdAt: new Date().toISOString(),
+                imageUrl: savedImage ? 'TEMP_IMAGE' : null,
+                audioUrl: savedAudioBlob ? 'TEMP_AUDIO' : null,
+                _tempImage: savedImage, // Сохраним base64 для отображения
+                _tempAudio: savedAudioBlob, // Сохраним blob
+                _isOptimistic: true // Флаг для замены через WebSocket
+            };
+            this.messages.push(optimisticMessage);
+            this.renderMessages();
+            this.scrollToBottom();
+            
+            // Сразу очищаем UI для оптимистичного отклика
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) messageInput.value = '';
+            this.clearAttachments();
             
             const payload = {
                 projectApiKey: this.apiKey,
@@ -329,12 +392,12 @@
                 language: 'ru'
             };
             
-            if (this.recordedAudioBlob) {
-                payload.audioBase64 = await this.blobToBase64(this.recordedAudioBlob);
+            if (savedAudioBlob) {
+                payload.audioBase64 = await this.blobToBase64(savedAudioBlob);
             }
             
-            if (this.selectedImage) {
-                payload.imageBase64 = this.selectedImage;
+            if (savedImage) {
+                payload.imageBase64 = savedImage;
             }
             
             console.log('Creating ticket with payload:', payload);
@@ -357,21 +420,9 @@
             console.log('Ticket created:', ticket);
             this.currentTicket = ticket;
             
-            // Добавляем первое сообщение в чат
-            let chatMessageText = text;
-            if (!text) {
-                if (this.recordedAudioBlob) chatMessageText = 'Голосовое сообщение';
-                else if (this.selectedImage) chatMessageText = 'Изображение';
-            }
+            // НЕ удаляем оптимистичное сообщение - оно заменится реальным через WebSocket
+            // this.messages = []; // <-- убрали, чтобы оптимистичное сообщение осталось
             
-            this.messages.push({
-                senderType: 'CLIENT',
-                message: chatMessageText,
-                createdAt: new Date().toISOString()
-            });
-            
-            this.renderMessages();
-            this.scrollToBottom();
             this.connectWebSocket(ticket.id);
         }
 
@@ -382,16 +433,42 @@
                 else if (this.selectedImage) msgText = 'Изображение';
             }
             
+            // Сохраняем ссылки на файлы перед очисткой UI
+            const savedAudioBlob = this.recordedAudioBlob;
+            const savedImage = this.selectedImage;
+            
+            // Оптимистичное отображение
+            const tempId = 'temp_' + Date.now();
+            const optimisticMessage = {
+                id: tempId,
+                senderType: 'CLIENT',
+                message: msgText,
+                createdAt: new Date().toISOString(),
+                imageUrl: savedImage ? 'TEMP_IMAGE' : null,
+                audioUrl: savedAudioBlob ? 'TEMP_AUDIO' : null,
+                _tempImage: savedImage,
+                _tempAudio: savedAudioBlob,
+                _isOptimistic: true
+            };
+            this.messages.push(optimisticMessage);
+            this.renderMessages();
+            this.scrollToBottom();
+            
+            // Сразу очищаем UI для оптимистичного отклика
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) messageInput.value = '';
+            this.clearAttachments();
+            
             const payload = {
                 ticketId: this.currentTicket.id,
                 senderType: 'CLIENT',
                 message: msgText
             };
             
-            if (this.recordedAudioBlob) {
+            if (savedAudioBlob) {
                 // Upload audio to MinIO first
                 const formData = new FormData();
-                formData.append('file', this.recordedAudioBlob, 'audio.webm');
+                formData.append('file', savedAudioBlob, 'audio.webm');
                 const uploadResponse = await fetch(`${this.apiUrl}/api/upload`, {
                     method: 'POST',
                     body: formData
@@ -405,17 +482,22 @@
                 }
             }
             
-            if (this.selectedImage) {
+            if (savedImage) {
                 // Upload image
-                const blob = this.base64ToBlob(this.selectedImage);
+                const blob = this.base64ToBlob(savedImage);
                 const formData = new FormData();
                 formData.append('file', blob, 'image.png');
                 const uploadResponse = await fetch(`${this.apiUrl}/api/upload`, {
                     method: 'POST',
                     body: formData
                 });
-                const { url } = await uploadResponse.json();
-                payload.imageUrl = url;
+                const uploadData = await uploadResponse.json();
+                payload.imageUrl = uploadData.url;
+                
+                // Сохранить описание изображения если оно есть
+                if (uploadData.imageDescription) {
+                    payload.imageDescription = uploadData.imageDescription;
+                }
             }
             
             const response = await fetch(`${this.apiUrl}/api/tickets/${this.currentTicket.id}/messages`, {
@@ -426,10 +508,7 @@
             
             if (!response.ok) throw new Error('Failed to send message');
             
-            const message = await response.json();
-            this.messages.push(message);
-            this.renderMessages();
-            this.scrollToBottom();
+            // Сообщение придёт через WebSocket и заменит оптимистичное
         }
 
         toggleRecording() {

@@ -18,5 +18,6 @@ public class ChatMessageRequest {
     private String message;
     private String imageUrl;
     private String audioUrl;
-    private String transcription;  // Транскрипция аудио (если есть)
+    private String transcription;
+    private String imageDescription;  // Транскрипция аудио (если есть)
 }

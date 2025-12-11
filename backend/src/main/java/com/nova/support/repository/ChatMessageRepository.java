@@ -1,6 +1,7 @@
 package com.nova.support.repository;
 
 import com.nova.support.domain.entity.ChatMessage;
+import com.nova.support.domain.entity.ChatMessage.SenderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,9 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
      * Подсчитать количество сообщений в тикете
      */
     long countByTicketId(Long ticketId);
+    
+    /**
+     * Проверить наличие сообщений от определенного типа отправителя
+     */
+    boolean existsByTicketIdAndSenderType(Long ticketId, SenderType senderType);
 }

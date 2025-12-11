@@ -218,17 +218,8 @@ class AdminDashboard {
         const modal = document.getElementById('ticketModal');
         const title = document.getElementById('modalTicketTitle');
         const body = document.getElementById('modalTicketBody');
-        const deleteBtn = document.getElementById('deleteTicketBtn');
 
         title.textContent = `Тикет #${ticket.id} - Чат с клиентом`;
-        
-        if (deleteBtn) {
-            deleteBtn.style.display = 'inline-block';
-            deleteBtn.onclick = () => {
-                this.closeModal();
-                this.deleteTicket(ticketId);
-            };
-        }
         
         body.innerHTML = `
             <div class="ticket-chat-layout">
@@ -848,10 +839,8 @@ class AdminDashboard {
         const modal = document.getElementById('ticketModal');
         const title = document.getElementById('modalTicketTitle');
         const body = document.getElementById('modalTicketBody');
-        const deleteBtn = document.getElementById('deleteTicketBtn');
         
         title.textContent = 'Добавить статью в БЗ';
-        if (deleteBtn) deleteBtn.style.display = 'none';
         
         body.innerHTML = `
             <div class="kb-form">
@@ -947,16 +936,8 @@ class AdminDashboard {
             const modal = document.getElementById('ticketModal');
             const title = document.getElementById('modalTicketTitle');
             const body = document.getElementById('modalTicketBody');
-            const deleteBtn = document.getElementById('deleteTicketBtn');
             
             title.textContent = article.title;
-            if (deleteBtn) {
-                deleteBtn.style.display = 'inline-block';
-                deleteBtn.onclick = () => {
-                    this.closeModal();
-                    this.deleteKbArticle(articleId);
-                };
-            }
             
             body.innerHTML = `
                 <div class="kb-article-view">
